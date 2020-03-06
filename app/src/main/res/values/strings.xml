@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CollegeMate</string>
+    <string name="title_home">Home</string>
+    <string name="title_map">Map</string>
+    <string name="title_calender">Calender</string>
+    <string name="title_settings">Settings</string>
+    <drawable name="actionbar_background">#CCFFFFFF</drawable>
+</resources>

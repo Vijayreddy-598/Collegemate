@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "587707228884",
+    "firebase_url": "https://collegemate-aef13.firebaseio.com",
+    "project_id": "collegemate-aef13",
+    "storage_bucket": "collegemate-aef13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587707228884:android:cf3f2abe61154f9c38d141",
+        "android_client_info": {
+          "package_name": "com.batch16.collegemate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587707228884-9m609pflf9vdkp6fbm3u5sbivfkjm3a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC9d7thqYAOKb6qNjrTNMgGdrdj-YZqeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587707228884-9m609pflf9vdkp6fbm3u5sbivfkjm3a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
