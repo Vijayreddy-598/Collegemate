@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -14,11 +16,22 @@ import com.batch16.collegemate.R;
 
 public class HomeFragment extends Fragment {
     static Toolbar toolbar;
+    EditText edTxt;
+    Button but;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        edTxt=root.findViewById(R.id.uptext);
+        but=root.findViewById(R.id.submitBut);
+        but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String txt=edTxt.getText().toString();
+
+            }
+        });
         return root;
     }
 

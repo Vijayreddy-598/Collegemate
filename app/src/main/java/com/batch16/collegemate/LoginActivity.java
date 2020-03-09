@@ -31,11 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
 
     }
-
-    public void movetonext(View view) {
-        Intent in=new Intent(this, MainActivity.class);
-        startActivity(in);
-    }
     public void InClicked(View view) {
         String em=uname.getText().toString();
         String pas= upass.getText().toString();
@@ -59,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         if(user!=null){
             String name=user.getDisplayName();
             String mail=user.getEmail();
-
             Toast.makeText(this, name+"\n"+mail, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
         }

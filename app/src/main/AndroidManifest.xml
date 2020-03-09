@@ -5,6 +5,7 @@
         android:protectionLevel="signature"/>-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -34,7 +35,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAdZqNz2MOBGUe-1uQwuSdSKZE7tfmQY1M" />
+            android:value="AIzaSyCq5Il-q03CX_lwTHbP7dHKl__GlVHB4Ps" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

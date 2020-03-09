@@ -1,34 +1,50 @@
 {
   "project_info": {
-    "project_number": "587707228884",
-    "firebase_url": "https://collegemate-aef13.firebaseio.com",
-    "project_id": "collegemate-aef13",
-    "storage_bucket": "collegemate-aef13.appspot.com"
+    "project_number": "930132147684",
+    "firebase_url": "https://collegemate-49a54.firebaseio.com",
+    "project_id": "collegemate-49a54",
+    "storage_bucket": "collegemate-49a54.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:587707228884:android:cf3f2abe61154f9c38d141",
+        "mobilesdk_app_id": "1:930132147684:android:dcb00d4816a495f33f9bf1",
         "android_client_info": {
           "package_name": "com.batch16.collegemate"
         }
       },
       "oauth_client": [
         {
-          "client_id": "587707228884-9m609pflf9vdkp6fbm3u5sbivfkjm3a8.apps.googleusercontent.com",
+          "client_id": "930132147684-odt3jrnph6ogd499p60en3l9ksu3lg22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.batch16.collegemate",
+            "certificate_hash": "05da98823d95cfef401aa388f7b421fe083588fd"
+          }
+        },
+        {
+          "client_id": "930132147684-798m0db99o6tlrr6c5aa8ba1p9mi46pl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.batch16.collegemate",
+            "certificate_hash": "2287583ae1425cc0e7151fb352ade96e5c99e0f0"
+          }
+        },
+        {
+          "client_id": "930132147684-u5koitlu5mqprd1gu4ofb4vd0lfaafqu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCC9d7thqYAOKb6qNjrTNMgGdrdj-YZqeM"
+          "current_key": "AIzaSyAftsC7CIhklHE1W8YiGeMsB_u8A1NJDw8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "587707228884-9m609pflf9vdkp6fbm3u5sbivfkjm3a8.apps.googleusercontent.com",
+              "client_id": "930132147684-u5koitlu5mqprd1gu4ofb4vd0lfaafqu.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
