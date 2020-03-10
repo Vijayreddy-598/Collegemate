@@ -11,12 +11,11 @@ import androidx.annotation.Nullable;
 
 public class MyDB extends SQLiteOpenHelper {
     public static final String TABLE_NAME="Attendance";
-    public static final String Day="Day";
-    public static final String Month="Month";
-    //public static final String COL_3="Month";
-    public static final String Att="Attendance";
-   // public static final String Aft="Afternoon_Att";
-    public static final String  CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+Day+" TEXT,"+Month+" TEXT,"+Att+" TEXT);";
+    public static final String COL_1="Name";
+    public static final String COL_2="Day";
+    public static final String COL_3="Month";
+    public static final String COL_4="Attendance";
+    public static final String  CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+COL_1+" TEXT,"+COL_2+" INT,"+COL_3+" INT,"+COL_4+" INT);";
 
     public MyDB(@Nullable Context context) {
         super(context,"Database",null,1);
