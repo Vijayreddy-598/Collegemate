@@ -23,15 +23,6 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        edTxt=root.findViewById(R.id.uptext);
-        but=root.findViewById(R.id.submitBut);
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String txt=edTxt.getText().toString();
-
-            }
-        });
         return root;
     }
 

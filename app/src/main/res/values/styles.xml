@@ -11,8 +11,26 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <style name="Toolbar.Light" parent="@style/AppTheme">
-        <item name="colorControlNormal">@color/grey_60</item>
-        <item name="android:textColorPrimary">@color/grey_60</item>
+    <style name="MyCustomCardTheme" parent="Base.CardView">
+        <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_middle</item>
+        <item name="android:layout_marginRight">@dimen/spacing_middle</item>
+        <item name="android:layout_marginTop">@dimen/spacing_medium</item>
+        <item name="android:visibility">visible</item>
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+   <!-- Button Styles-->
+    <style name="Button.Colored" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="Button.Borderless" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+    <style name="Button.White" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 </resources>

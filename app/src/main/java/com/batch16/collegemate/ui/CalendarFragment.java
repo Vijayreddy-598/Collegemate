@@ -2,6 +2,7 @@ package com.batch16.collegemate.ui;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +38,7 @@ import com.batch16.collegemate.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,7 +74,7 @@ public class CalendarFragment extends Fragment {
     public String passDayClicked;
     EditText date,month,event;
     Button addevent;
-
+    int sdate,smonth;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,23 +92,12 @@ public class CalendarFragment extends Fragment {
 
         my= new MyDB(getContext());
 
-        date=root.findViewById(R.id.Date);
-        month=root.findViewById(R.id.Month);
-        event=root.findViewById(R.id.Event);
-        addevent=root.findViewById(R.id.addevent);
-        addevent.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onClick(View v) {
-                String sevent=event.getText().toString();
-                int sdate=Integer.parseInt(date.getText().toString());
-                int smonth=Integer.parseInt(month.getText().toString());
-                ContentValues cv=new ContentValues();
-                cv.put(my.COL_1,sevent);
-                cv.put(my.COL_2,sdate);
-                cv.put(my.COL_3,smonth);
-                cv.put(my.COL_4,70);
-                my.insertData(cv);
-                Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                open(root);
             }
         });
 
@@ -140,6 +134,8 @@ public class CalendarFragment extends Fragment {
                 moView.setText(dateFormatForMonth.format(dateClicked));
                 yearView.setText(dateFormatForYear.format(dateClicked));
                 dayView.setText(dateFormatForDate.format(dateClicked));
+                        sdate =dateClicked.getDate();
+                        smonth =dateClicked.getMonth();
                 Log.d(TAG, "inside onclick " + dateFormatForDisplaying.format(dateClicked));
                 List<Event> bookingsFromMap = compactCalendarView.getEvents(dateClicked);
 
@@ -169,9 +165,6 @@ public class CalendarFragment extends Fragment {
                 compactCalendarView.scrollLeft();
             }
         });
-
-
-
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,11 +175,51 @@ public class CalendarFragment extends Fragment {
         return root;
     }
 
+
+    //Floating Action Button Function
+    private void open(View root) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        Context context=root.getContext();
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(24,24,24,24);
+
+        final EditText EventBox = new EditText(context);
+        EventBox.setHint("Enter Event");
+        EventBox.setInputType(InputType.TYPE_CLASS_TEXT);
+        layout.addView(EventBox);
+
+        alertDialogBuilder.setView(layout);
+
+
+        alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //What ever you want to do with the value
+                String sevent=EventBox.getText().toString();
+                ContentValues cv=new ContentValues();
+                cv.put(my.COL_1,sevent);
+                cv.put(my.COL_2,sdate);
+                cv.put(my.COL_3,smonth);
+                cv.put(my.COL_4,70);
+                my.insertData(cv);
+                Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alertDialogBuilder.show();
+    }
+
     private void loadEvents() {
            List<Event> events = getEvents(2);
            compactCalendarView.addEvents(events);
     }
-
 
 
     private List<Event> getEvents(int month) {
