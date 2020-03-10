@@ -11,14 +11,14 @@ import androidx.annotation.Nullable;
 
 public class MyDB extends SQLiteOpenHelper {
     public static final String TABLE_NAME="Attendance";
-    public static final String COL_1="Name";
+    public static final String COL_1="Event_Name";
     public static final String COL_2="Day";
     public static final String COL_3="Month";
     public static final String COL_4="Attendance";
     public static final String  CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+COL_1+" TEXT,"+COL_2+" INT,"+COL_3+" INT,"+COL_4+" INT);";
 
     public MyDB(@Nullable Context context) {
-        super(context,"Database",null,1);
+        super(context,"Database",null,3);
     }
 
     @Override
@@ -39,6 +39,10 @@ public class MyDB extends SQLiteOpenHelper {
     public Cursor readdata(){
         SQLiteDatabase sr=this.getReadableDatabase();
         return sr.rawQuery("SELECT * FROM "+TABLE_NAME,null);
+    }
+    public Cursor GetEventOn(int month){
+        SQLiteDatabase sr=this.getReadableDatabase();
+        return sr.rawQuery("SELECT * FROM "+ TABLE_NAME +" WHERE "+COL_3+" = "+month,null);
     }
 
 }

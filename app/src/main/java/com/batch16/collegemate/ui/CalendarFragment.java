@@ -51,6 +51,8 @@ import static java.lang.Boolean.TRUE;
 
 
 public class CalendarFragment extends Fragment {
+
+
     View root;
     private static final String TAG = "Babu";
     private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
@@ -60,32 +62,59 @@ public class CalendarFragment extends Fragment {
     private SimpleDateFormat dateFormatForDate = new SimpleDateFormat("EEEE", Locale.getDefault());
     private boolean shouldShow = false;
     private CompactCalendarView compactCalendarView;
-    private ActionBar toolbar;
+
+
     MyDB my;
     static int count=0;
     public String passDayClicked;
+    EditText date,month,event;
+    Button addevent;
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+
         root = inflater.inflate(R.layout.fragment_calender, container, false);
         final List<String> mutableBookings = new ArrayList<>();
         final ListView bookingsListView = root.findViewById(R.id.bookings_listview);
-        final TextView moView=root.findViewById(R.id.Month);
-        final TextView yearView=root.findViewById(R.id.Year);
+        final TextView moView=root.findViewById(R.id.samMonth);
+        final TextView yearView=root.findViewById(R.id.samYear);
         final TextView dayView=root.findViewById(R.id.Day);
         final ImageView left=root.findViewById(R.id.leftArrow);
         final ImageView right=root.findViewById(R.id.rightArrow);
 
+        my= new MyDB(getContext());
 
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        date=root.findViewById(R.id.Date);
+        month=root.findViewById(R.id.Month);
+        event=root.findViewById(R.id.Event);
+        addevent=root.findViewById(R.id.addevent);
+        addevent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                open(root);
+            public void onClick(View v) {
+                String sevent=event.getText().toString();
+                int sdate=Integer.parseInt(date.getText().toString());
+                int smonth=Integer.parseInt(month.getText().toString());
+                ContentValues cv=new ContentValues();
+                cv.put(my.COL_1,sevent);
+                cv.put(my.COL_2,sdate);
+                cv.put(my.COL_3,smonth);
+                cv.put(my.COL_4,70);
+                my.insertData(cv);
+                Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
             }
         });
 
 
+
         final ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mutableBookings);
         bookingsListView.setAdapter(adapter);
+
+
+
+
         compactCalendarView = root.findViewById(R.id.compactcalendar_view);
         compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
@@ -101,6 +130,10 @@ public class CalendarFragment extends Fragment {
         dayView.setText(dateFormatForDate.format(calendar.getTime()));
         moView.setText(dateFormatForMonth.format(calendar.getTime()));
         //set title on calendar scroll
+
+
+
+
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
@@ -127,6 +160,8 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+
+
         //Scroll Left Right Fuctionality
         left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +169,9 @@ public class CalendarFragment extends Fragment {
                 compactCalendarView.scrollLeft();
             }
         });
+
+
+
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,66 +183,39 @@ public class CalendarFragment extends Fragment {
     }
 
     private void loadEvents() {
-/*        addEvents(-1, -1);
-       addEvents(Calendar.DECEMBER, -1);
-       addEvents(Calendar.AUGUST, -1);*/
-        Log.i(TAG, "loadEvents: Called");
-       Date firstDayOfMonth = currentCalender.getTime();
-       firstDayOfMonth.setDate(1);
-       firstDayOfMonth.setMonth(0);
-       for (int i = 0; i < 6; i++) {
-          /* currentCalender.setTime(firstDayOfMonth);
-           currentCalender.add(Calendar.DATE,i);
-           setToMidnight(currentCalender);
-           long timeInMillis = currentCalender.getTimeInMillis();*/
-           List<Event> events = getEvents(i);
+           List<Event> events = getEvents(2);
            compactCalendarView.addEvents(events);
-       }
     }
+
+
+
     private List<Event> getEvents(int month) {
         //Events through SQLdata
         List<Event> events=new ArrayList<>();
-        for (int i = 0; i < 31; i++) {
-            long timeInMillis = datetoMillis(2020,month,i);
-            events.add(new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Absent From at " + new Date(timeInMillis)));
-            events.add(new Event(Color.argb(255, 100, 68, 65), timeInMillis, "Event 2 at " + new Date(timeInMillis)));
+        Cursor c= my.GetEventOn(month);
+        while (c.moveToNext()){
+            long timeInMillis = datetoMillis(2020,month,c.getInt(1));
+            events.add(new Event(R.color.colorPrimary, timeInMillis, "Event is " + c.getString(0)));
+
         }
        return events;
     }
+
+
     private void addEvents(int month, int year) {
         currentCalender.setTime(new Date());
         currentCalender.set(Calendar.DAY_OF_MONTH, 1);
     }
+
+
     private void setToMidnight(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void open(View view) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
-        final EditText edittext = new EditText(getContext());
-        alertDialogBuilder.setView(edittext);
-        alertDialogBuilder.setTitle("Enter Your title");
-        alertDialogBuilder.setMessage("Enter message: ");
-        alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //What ever you want to do with the value
-                String YouEditTextValue = edittext.getText().toString();
-                long dateMillis = datetoMillis(2020,2,14);
-                Log.d(TAG, "onClick: DATE: + " + dateMillis);
-                Event ev1 = new Event(Color.GREEN, dateMillis, YouEditTextValue);
-                compactCalendarView.addEvent(ev1);
-            }
-        });
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // what ever you want to do with No option.
-            }
-        });
-        alertDialogBuilder.show();
-    }
+
+
     // Convert Date into MilliSeconds, to add to correct Day.
     public long datetoMillis(int year,int month,int date) {
         Calendar cal=Calendar.getInstance();

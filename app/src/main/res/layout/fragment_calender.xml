@@ -1,79 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="15sp"
     android:orientation="vertical"
     tools:context=".ui.CalendarFragment">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/leftArrow"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
-
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_marginLeft="20sp"
-            android:layout_marginRight="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/compactcalendar_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/Year"
+            <ImageView
+                android:id="@+id/leftArrow"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="YYYY"
-                android:textColor="@color/grey_900"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/Month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
                 android:gravity="center"
-                android:text="XX MMM"
-                android:textColor="@color/grey_900"
-                android:textSize="40sp"
-                />
-            <TextView
-                android:id="@+id/Day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sunday"
-                android:textColor="@color/overlay_dark_60"
-                android:textSize="20sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/samYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="YYYY"
+                    android:textColor="@color/grey_900"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/samMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="XX MMM"
+                    android:textColor="@color/grey_900"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:id="@+id/Day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sunday"
+                    android:textColor="@color/overlay_dark_60"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/rightArrow"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/rightArrow"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10sp">
+        <ListView
+            android:id="@+id/bookings_listview"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/compactcalendar_view"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="300dp"
+            android:layout_marginStart="2dp"
             app:compactCalendarBackgroundColor="@color/deep_purple_50"
             app:compactCalendarCurrentDayBackgroundColor="@color/light_green_900"
             app:compactCalendarCurrentDayIndicatorStyle="fill_large_indicator"
@@ -84,25 +95,51 @@
             app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="true"
             app:compactCalendarTargetHeight="300dp"
             app:compactCalendarTextColor="@color/overlay_dark_60"
-            app:compactCalendarTextSize="15sp" />
-    </androidx.cardview.widget.CardView>
+            app:compactCalendarTextSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
-    <ListView
-        android:id="@+id/bookings_listview"
-        android:layout_width="wrap_content"
-        android:layout_height="200sp"
-        android:layout_below="@+id/calendar_control_buttons_2"/>
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/compactcalendar_view">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="56sp"
-        android:layout_height="56sp"
-        android:padding="0dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_add_circle_24dp"
-        app:backgroundTint="@android:color/transparent"
-        app:borderWidth="0dp"
-        app:useCompatPadding="true"
-        android:layout_gravity="center"/>
+            <EditText
+                android:id="@+id/Event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter Event"
+                android:nextFocusRight="@+id/Date"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Date"
+                android:nextFocusRight="@+id/Month"
+                android:inputType="numberSigned"
+                android:imeOptions="actionNext"/>
+
+            <EditText
+                android:id="@+id/Month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Month"
+                android:inputType="numberSigned"
+                android:imeOptions="actionDone"/>
+
+            <Button
+                android:id="@+id/addevent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit" />
+        </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
