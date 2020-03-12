@@ -47,7 +47,7 @@ public class LocationMonitoringService extends Service  implements LocationListe
                 .build();
 
         mLocationRequest.setInterval(300000);
-        mLocationRequest.setFastestInterval(60000);
+        mLocationRequest.setFastestInterval(30000);
 
 
         int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
@@ -105,6 +105,8 @@ public class LocationMonitoringService extends Service  implements LocationListe
 
         if (location != null) {
             Log.d(TAG, "== location != null");
+            //Upload to dataBase
+
 
             //Send result to activities
             sendMessageToUI(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
@@ -115,7 +117,6 @@ public class LocationMonitoringService extends Service  implements LocationListe
     private void sendMessageToUI(String lat, String lng) {
 
         Log.d(TAG, "Sending info...");
-
         Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
         intent.putExtra(EXTRA_LATITUDE, lat);
         intent.putExtra(EXTRA_LONGITUDE, lng);

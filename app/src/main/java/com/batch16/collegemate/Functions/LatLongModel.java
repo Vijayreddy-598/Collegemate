@@ -1,15 +1,14 @@
 package com.batch16.collegemate.Functions;
 
-class LatLongModel {
+public class LatLongModel {
     Double Latitude,Longitude;
     String Name;
-    int count;
 
-    public LatLongModel(Double Latitude, Double Longitude,String name,int cou) {
+
+    public LatLongModel(Double Latitude, Double Longitude,String name) {
         this.Latitude = Latitude;
         this.Longitude = Longitude;
         this.Name=name;
-        this.count=cou;
     }
 
     public LatLongModel(){
@@ -39,10 +38,4 @@ class LatLongModel {
         this.Name = name;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-    public int getCount() {
-        return count;
-    }
 }

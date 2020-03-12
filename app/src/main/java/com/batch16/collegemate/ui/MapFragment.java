@@ -1,12 +1,14 @@
 package com.batch16.collegemate.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -26,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.batch16.collegemate.BuildConfig;
+import com.batch16.collegemate.Functions.LatLongModel;
 import com.batch16.collegemate.Functions.LocationMonitoringService;
 import com.batch16.collegemate.MainActivity;
 import com.batch16.collegemate.R;
@@ -41,6 +44,16 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class MapFragment extends Fragment implements  OnMapReadyCallback{
@@ -48,8 +61,11 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
     public static GoogleMap map;
     public static Location  currentLocation;
     View root;
-    static Marker user;
-
+    static Marker user,mark2;
+    DatabaseReference myRef;
+    Activity activity;
+    String name;
+    static int count=0;
     //New Version
     private static final String TAG = MapFragment.class.getSimpleName();
     /**
@@ -58,13 +74,18 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private boolean mAlreadyStartedService = false;
     private TextView mMsgView;
-
-
+    LatLongModel model;
+    SharedPreferences sp;
+    Location A,B;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_map, container, false);
-        mMsgView =root.findViewById(R.id.textview);
 
+        activity = getActivity();
+        myRef= FirebaseDatabase.getInstance().getReference();
+        sp=this.getActivity().getSharedPreferences("UserDetails",MODE_PRIVATE);
+
+        mMsgView =root.findViewById(R.id.textview);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(
                 new BroadcastReceiver() {
                     @Override
@@ -72,9 +93,27 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
                         String latitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LATITUDE);
                         String longitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LONGITUDE);
 
+                        //String name=sp.getString("UserDetails",null);
+
                         if (latitude != null && longitude != null) {
+                            updateMap(Double.parseDouble(latitude),Double.parseDouble(longitude));
+                            A=new Location("User");
+                            A.setLongitude(Double.parseDouble(latitude));
+                            A.setLatitude(Double.parseDouble(longitude));
+
+
+                            name=sp.getString("UserName","");
+
+                            model=new LatLongModel(Double.parseDouble(latitude),Double.parseDouble(longitude),name);
+
+
+                            myRef.child("Users").child(name).setValue(model);
+
+
                             mMsgView.setText("Location Services Started" + "\n Latitude : " + latitude + "\n Longitude: " + longitude);
-                            updateMap(Double.valueOf(latitude),Double.valueOf(longitude));
+
+
+
                         }
                     }
                 }, new IntentFilter(LocationMonitoringService.ACTION_LOCATION_BROADCAST)
@@ -89,13 +128,21 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
         @Override
         public void onMapReady(GoogleMap googleMap) {
         map=googleMap;
-    }
-        public static void updateMap(Double lat,Double lon){
-        map.clear();
-        LatLng latLng=new LatLng(lat,lon);
+        LatLng latLng=new LatLng(0,0);
         map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-        user=map.addMarker(new MarkerOptions().position(latLng).title("Your Location"));
+        user=map.addMarker(new MarkerOptions().position(latLng).title("Your Location").visible(false));
+    }
+
+
+        public static void updateMap( double lat,double lon){
+        user.setPosition(new LatLng(lat,lon));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lon),15));
+        user.setVisible(true);
+
+        }
+        public static void updateFrMap(double lat, double lon,Marker mark){
+        mark2.setPosition(new LatLng(lat,lon));
     }
 
    @Override
@@ -148,13 +195,10 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
             return false;
         }
 
-
         if (dialog != null) {
             dialog.dismiss();
         }
-
         //Yes there is active internet connection. Next check Location is granted by user or not.
-
         if (checkPermissions()) { //Yes permissions are granted by the user. Go to the next step.
             startStep3();
         } else {  //No user has not granted the permissions yet. Request now.
@@ -175,8 +219,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback{
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-
                         //Block the Application Execution until user grants the permissions
                         if (startStep2(dialog)) {
 

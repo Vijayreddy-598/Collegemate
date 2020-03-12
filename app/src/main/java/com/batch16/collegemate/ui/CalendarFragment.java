@@ -32,14 +32,12 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
-
 import com.batch16.collegemate.Functions.MyDB;
 import com.batch16.collegemate.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
@@ -204,6 +202,7 @@ public class CalendarFragment extends Fragment {
                 cv.put(my.COL_4,70);
                 my.insertData(cv);
                 Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
+
             }
         });
 
