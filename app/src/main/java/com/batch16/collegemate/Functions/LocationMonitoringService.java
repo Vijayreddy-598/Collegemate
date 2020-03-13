@@ -31,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LocationMonitoringService extends Service  implements LocationListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
         {
-    private static final String TAG = LocationMonitoringService.class.getSimpleName();
+    private static final String TAG = "Jay";
     GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest = new LocationRequest();
 
