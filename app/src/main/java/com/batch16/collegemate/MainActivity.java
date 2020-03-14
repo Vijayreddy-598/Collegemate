@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,10 +52,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.batch16.collegemate.ui.MapFragment.map;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,13 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     //General Variables
     private FirebaseAuth mAuth;
-    SharedPreferences sp;
+    public static SharedPreferences sp;
+    SharedPreferences.Editor locationeditor;
     DatabaseReference myRef;
-    String name;
-    Location A,B;
-    LatLongModel model;
+    String name,lat="0",lo="0";
     MapFragment frg;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         //Set UserName  From FireBaseAuth.getUserEmail
 
         sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
+       // spLocatication=getSharedPreferences("location",MODE_PRIVATE);
+       // locationeditor=spLocatication.edit();
         if(!sp.contains("UserName")){
             mAuth= FirebaseAuth.getInstance();
             FirebaseUser user=mAuth.getCurrentUser();
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             String mail=user.getEmail();
             mail=mail.substring(0,mail.length()-10);
 
-            Toast.makeText(this, "\n"+mail+" \n"+!sp.contains("UserName"), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "\n"+mail+" \n"+sp.contains("UserName"), Toast.LENGTH_SHORT).show();
 
 
             SharedPreferences.Editor se=sp.edit();
@@ -107,71 +106,9 @@ public class MainActivity extends AppCompatActivity {
             se.apply();
         }
         name=sp.getString("UserName","");
-
-        //Location from LocationMonitoringService and save from Firebase
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-
-                        String latitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LATITUDE);
-                        String longitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LONGITUDE);
-
-                        if (latitude != null && longitude != null) {
-
-                            Double lat=Double.parseDouble(latitude);
-                            Double lon=Double.parseDouble(longitude);
-                            Toast.makeText(MainActivity.this, "Main Activity \n Lat:"+lat+"\nLon:"+lon, Toast.LENGTH_SHORT).show();
-
-                            //SharedPreferences to share location to MapFragment
-                            SharedPreferences.Editor se=sp.edit();
-                            se.putString("UserLat",latitude);
-                            se.putString("UserLon",longitude);
-                            se.apply();
-
-                            model = new LatLongModel(lat, lon, name);
-                            myRef.child("Users").child(name).setValue(model);
-
-                            //((MapFragment)frg).updateMap(lat,lon);
-
-                        }
-                    }
-                }, new IntentFilter(LocationMonitoringService.ACTION_LOCATION_BROADCAST)
-        );
-
-
-
-
         //get nearbyFriends Location through Firebase.DataBase
 
-       /* myRef.child("Users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Marker> mark= new ArrayList<>();
-                map.clear();
-                for (DataSnapshot ds:dataSnapshot.getChildren()) {
-                    if(!ds.child("name").equals(name)){
-                        Double lat= ds.child("latitude").getValue(Double.class);
-                        Double lon= ds.child("longitude").getValue(Double.class);
-                        String Uname=ds.child("name").getValue(String.class);
-                        LatLongModel mod=new LatLongModel(lat,lon,Uname);
-                        B=new Location("Friend");
-                        B.setLongitude(lat);
-                        B.setLatitude(lon);
-                        float dis=A.distanceTo(B);
-                        float kmdis=dis/1000;
-                        if(kmdis<=1.00) {
-                            mark.add(map.addMarker(new MarkerOptions().position(new LatLng(lat,lon)).title(Uname)));
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });*/
 
     }
     @Override
@@ -385,8 +322,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 // Build intent that displays the App settings screen.
                                 Intent intent = new Intent();
-                                intent.setAction(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                 Uri uri = Uri.fromParts("package",
                                         BuildConfig.APPLICATION_ID, null);
                                 intent.setData(uri);
