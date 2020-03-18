@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout3"
@@ -8,120 +8,132 @@
     android:layout_margin="15sp"
     android:orientation="vertical"
     tools:context=".ui.CalendarFragment">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:text="PRIMARY"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintVertical_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/compactcalendar_view"
-        app:rippleColor="@color/grey_5"
-        app:srcCompat="@drawable/ic_add" />
-
     <LinearLayout
-            android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/leftArrow"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="12dp"
+            android:layout_margin="10sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/compactcalendar_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <ImageView
-                android:id="@+id/leftArrow"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/samYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10sp"
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
+                android:text="YYYY"
+                android:textColor="@color/grey_900"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/samMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:text="XX MMM"
+                android:textColor="@color/grey_900"
+                android:textSize="40sp" />
 
-                <TextView
-                    android:id="@+id/samYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="YYYY"
-                    android:textColor="@color/grey_900"
-                    android:textSize="20sp" />
+            <TextView
+                android:id="@+id/Day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:textColor="@color/overlay_dark_60"
+                android:textSize="20sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/samMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="XX MMM"
-                    android:textColor="@color/grey_900"
-                    android:textSize="40sp" />
+        <ImageView
+            android:id="@+id/rightArrow"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
-                <TextView
-                    android:id="@+id/Day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sunday"
-                    android:textColor="@color/overlay_dark_60"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/rightArrow"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+    </LinearLayout>
+   <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            android:id="@+id/compactcalendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="2dp"
+            app:compactCalendarBackgroundColor="@color/deep_purple_50"
+            app:compactCalendarCurrentDayBackgroundColor="@color/teal_900"
+            app:compactCalendarCurrentDayIndicatorStyle="fill_large_indicator"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/purple_A400"
+            app:compactCalendarCurrentSelectedDayTextColor="@color/overlay_light_90"
+            app:compactCalendarEventIndicatorStyle="no_fill_large_indicator"
+            app:compactCalendarOtherMonthDaysTextColor="#534c4c"
+            app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="true"
+            app:compactCalendarTargetHeight="300dp"
+            app:compactCalendarTextColor="@color/overlay_dark_60"
+            app:compactCalendarTextSize="15sp"
+            android:layout_below="@+id/linearLayout"
+         />
+        <ListView
+            android:id="@+id/bookings_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/but"
+            >
+        </ListView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/but"
+            android:layout_below="@+id/compactcalendar_view">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Event"
+            style="@style/Button.Colored"
+            android:id="@+id/addevent"/>
+        <Button
+            android:id="@+id/editevent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit Event"
+            style="@style/Button.Colored"
+            />
+        <Button
+            android:id="@+id/deleteevent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete Event"
+            style="@style/Button.Colored"
+            />
 
         </LinearLayout>
 
-    <ListView
-        android:id="@+id/bookings_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/compactcalendar_view"
-        app:layout_constraintVertical_bias="0.184">
-
-    </ListView>
-
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        android:id="@+id/compactcalendar_view"
+ <!--  <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginStart="2dp"
-        app:compactCalendarBackgroundColor="@color/deep_purple_50"
-        app:compactCalendarCurrentDayBackgroundColor="@color/light_green_900"
-        app:compactCalendarCurrentDayIndicatorStyle="fill_large_indicator"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/deep_purple_900"
-        app:compactCalendarCurrentSelectedDayTextColor="@color/overlay_light_90"
-        app:compactCalendarEventIndicatorStyle="no_fill_large_indicator"
-        app:compactCalendarOtherMonthDaysTextColor="#534c4c"
-        app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="true"
-        app:compactCalendarTargetHeight="300dp"
-        app:compactCalendarTextColor="@color/overlay_dark_60"
-        app:compactCalendarTextSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        app:rippleColor="@color/grey_5"
+        app:srcCompat="@drawable/ic_add"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="ExtendedFabMan"/>-->
+   </RelativeLayout>

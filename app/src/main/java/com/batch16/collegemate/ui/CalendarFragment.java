@@ -1,56 +1,43 @@
 package com.batch16.collegemate.ui;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.fragment.app.Fragment;
 import com.batch16.collegemate.Functions.MyDB;
 import com.batch16.collegemate.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
-import static java.lang.Boolean.TRUE;
 
 
 public class CalendarFragment extends Fragment {
@@ -65,14 +52,13 @@ public class CalendarFragment extends Fragment {
     private SimpleDateFormat dateFormatForDate = new SimpleDateFormat("EEEE", Locale.getDefault());
     private boolean shouldShow = false;
     private CompactCalendarView compactCalendarView;
-
+    ListView listView;
 
     MyDB my;
     static int count=0;
-    public String passDayClicked;
-    EditText date,month,event;
-    Button addevent;
-    int sdate,smonth;
+    Button addevent,deleteevent,editevent;
+    int sdate,smonth,pos;
+   ArrayAdapter adapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,21 +76,82 @@ public class CalendarFragment extends Fragment {
 
         my= new MyDB(getContext());
 
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        bookingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pos=position;
+            }
+        });
+
+
+        //AddEvent by Button
+        addevent=root.findViewById(R.id.addevent);
+        addevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 open(root);
             }
         });
 
 
 
-        final ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mutableBookings);
+        deleteevent=root.findViewById(R.id.deleteevent);
+        deleteevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteEvent(sdate,smonth,pos);
+            }
+        });
+
+
+
+        editevent=root.findViewById(R.id.editevent);
+        editevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                Context context=root.getContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setPadding(24,24,24,24);
+
+                TextView tv=new TextView(context);
+                tv.setText("Edit Event name on "+sdate);
+                tv.setTextSize(24);
+                layout.addView(tv);
+
+                final EditText EventBox = new EditText(context);
+                EventBox.setHint("Enter Event");
+                EventBox.setInputType(InputType.TYPE_CLASS_TEXT);
+                layout.addView(EventBox);
+
+                alertDialogBuilder.setView(layout);
+                alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //What ever you want to do with the value
+                        String sevent=EventBox.getText().toString();
+                        editevent(sdate,smonth,pos,sevent);
+                        Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // what ever you want to do with No option.
+                    }
+                });
+
+                alertDialogBuilder.show();
+            }
+
+
+        });
+
+
+        //ListView Code
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mutableBookings);
         bookingsListView.setAdapter(adapter);
-
-
 
 
         compactCalendarView = root.findViewById(R.id.compactcalendar_view);
@@ -121,11 +168,9 @@ public class CalendarFragment extends Fragment {
         yearView.setText(dateFormatForYear.format(calendar.getTime()));
         dayView.setText(dateFormatForDate.format(calendar.getTime()));
         moView.setText(dateFormatForMonth.format(calendar.getTime()));
+
+
         //set title on calendar scroll
-
-
-
-
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
@@ -170,11 +215,16 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+
+
+
+
+
         return root;
     }
 
 
-    //Floating Action Button Function
+    //Floating Action Button Add event Function
     private void open(View root) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
@@ -183,23 +233,25 @@ public class CalendarFragment extends Fragment {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(24,24,24,24);
 
+        TextView tv=new TextView(context);
+        tv.setText("Enter Event name on "+sdate);
+        tv.setTextSize(24);
+        layout.addView(tv);
+
         final EditText EventBox = new EditText(context);
         EventBox.setHint("Enter Event");
         EventBox.setInputType(InputType.TYPE_CLASS_TEXT);
         layout.addView(EventBox);
 
         alertDialogBuilder.setView(layout);
-
-
         alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //What ever you want to do with the value
                 String sevent=EventBox.getText().toString();
                 ContentValues cv=new ContentValues();
-                cv.put(my.COL_1,sevent);
                 cv.put(my.COL_2,sdate);
                 cv.put(my.COL_3,smonth);
-                cv.put(my.COL_4,70);
+                cv.put(my.COL_4,sevent);
                 my.insertData(cv);
                 Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
 
@@ -215,6 +267,22 @@ public class CalendarFragment extends Fragment {
         alertDialogBuilder.show();
     }
 
+
+    private  void deleteEvent(int day,int month,int pos){
+        adapter.remove(adapter.getItem(pos));
+        Cursor c=my.getEventofDay(day,month);
+        c.move(pos+1);
+        int id=c.getInt(0);
+        my.deleteonID(id);
+    }
+    private  void editevent(int day,int month,int pos,String event){
+        Cursor c=my.getEventofDay(day,month);
+        c.move(pos+1);
+        int id=c.getInt(0);
+        my.editSelected(id,event);
+        adapter.notifyDataSetChanged();
+    }
+
     private void loadEvents() {
            List<Event> events = getEvents(2);
            compactCalendarView.addEvents(events);
@@ -227,7 +295,7 @@ public class CalendarFragment extends Fragment {
         Cursor c= my.GetEventOn(month);
         while (c.moveToNext()){
             long timeInMillis = datetoMillis(2020,month,c.getInt(1));
-            events.add(new Event(R.color.colorPrimary, timeInMillis, "Event is " + c.getString(0)));
+            events.add(new Event(R.color.colorPrimary, timeInMillis, "Event is " + c.getString(3)));
 
         }
        return events;

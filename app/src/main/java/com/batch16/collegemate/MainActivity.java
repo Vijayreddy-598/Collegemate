@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         frg=new MapFragment();
 
         myRef= FirebaseDatabase.getInstance().getReference();
-        mMsgView=findViewById(R.id.textview);
         //Set Bottom Navigation
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

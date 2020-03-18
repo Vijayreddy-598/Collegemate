@@ -165,8 +165,8 @@ public class LocationMonitoringService extends Service  implements LocationListe
                                     NotificationCompat.Builder notification =
                                             new NotificationCompat.Builder(getApplicationContext(),Channel_Id);
                                     notification.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
-                                    notification.setContentTitle(""+Uname+" is Near you"+" Catchup If possible");
-                                    notification.setContentText("Nearby Friend");
+                                    notification.setContentTitle("Nearby Friend");
+                                    notification.setContentText(" "+Uname+" is Near you"+" Catchup If possible");
                                     Intent intent = new Intent(getApplicationContext(),MapFragment.class);
                                     PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),42,intent, PendingIntent.FLAG_UPDATE_CURRENT);
                                     notification.setContentIntent(pendingIntent);

@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30sp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/oswald_bold"
+        android:gravity="center"
+        android:text="Profile"
+        android:textColor="@color/blue_grey_900"
+        android:textSize="30sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="150sp"
+        android:layout_gravity="center"
+        android:contentDescription="TODO"
+        tools:srcCompat="@tools:sample/avatars" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Name:"
+            android:textColor="@color/overlay_dark_90"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="Sample User"
+            android:textSize="24sp" />
+    </LinearLayout>
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="15sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Email:"
+            android:textColor="@color/overlay_dark_90"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="SampleUser1@gmail"
+            android:textSize="24sp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Roll No:"
+            android:textColor="@color/overlay_dark_90"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="1XAK1A0XXX"
+            android:textSize="24sp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/oswald_bold"
+        android:gravity="center"
+        android:text="Settings"
+        android:textColor="@color/blue_grey_900"
+        android:textSize="30sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Notify Nearby Friends"
+            android:textColor="@color/overlay_dark_90"
+            android:textSize="24sp" />
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Auto Silent Mode"
+            android:textColor="@color/overlay_dark_90"
+            android:textSize="24sp" />
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

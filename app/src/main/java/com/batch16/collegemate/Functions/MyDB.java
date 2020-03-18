@@ -6,16 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 
 public class MyDB extends SQLiteOpenHelper {
     public static final String TABLE_NAME="Attendance";
-    public static final String COL_1="Event_Name";
+    private static final String COL_1 ="ID";
     public static final String COL_2="Day";
     public static final String COL_3="Month";
-    public static final String COL_4="Attendance";
-    public static final String  CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+COL_1+" TEXT,"+COL_2+" INT,"+COL_3+" INT,"+COL_4+" INT);";
+    public static final String COL_4="Event_Name";
+
+    public static final String  CREATE_TABLE="CREATE TABLE "+TABLE_NAME+"("+COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL_2+" INT,"+COL_3+" INT,"+COL_4+" TEXT);";
 
     public MyDB(@Nullable Context context) {
         super(context,"Database",null,3);
@@ -43,6 +43,21 @@ public class MyDB extends SQLiteOpenHelper {
     public Cursor GetEventOn(int month){
         SQLiteDatabase sr=this.getReadableDatabase();
         return sr.rawQuery("SELECT * FROM "+ TABLE_NAME +" WHERE "+COL_3+" = "+month,null);
+    }
+    public Cursor getEventofDay(int day,int month){
+        SQLiteDatabase sq=this.getReadableDatabase();
+        return sq.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+COL_2+" = "+day+" AND "+COL_3+" = "+month,null);
+    }
+    public void editSelected(int id,String upEvent){
+        SQLiteDatabase sq=this.getReadableDatabase();
+        sq.execSQL("UPDATE "+TABLE_NAME+" SET "+COL_4+" = "+upEvent+" WHERE "+COL_1+" = "+id+" ;");
+    }
+    public void getevents(int day,int month){
+
+    }
+    public void deleteonID(int id){
+        SQLiteDatabase sq=this.getReadableDatabase();
+        sq.execSQL("DELETE FROM "+TABLE_NAME+" WHERE "+COL_1+" = "+id+";");
     }
 
 }
