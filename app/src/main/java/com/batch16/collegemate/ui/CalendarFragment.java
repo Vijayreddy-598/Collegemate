@@ -44,7 +44,7 @@ public class CalendarFragment extends Fragment {
 
 
     View root;
-    private static final String TAG = "Babu";
+    private static final String TAG = "Test";
     private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
     private SimpleDateFormat dateFormatForDisplaying = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.getDefault());
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("dd MMM", Locale.getDefault());

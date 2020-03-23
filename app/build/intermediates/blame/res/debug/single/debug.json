@@ -72,16 +72,16 @@
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\mipmap-anydpi-v26\\calendar.jpg"
     },
     {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_calendar_list_view.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\calendar_list_view.xml"
+    },
+    {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_calender.xml.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\ic_calender.xml"
     },
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\navigation_mobile_navigation.xml.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\navigation\\mobile_navigation.xml"
-    },
-    {
-        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_calendar_list_view.xml.flat",
-        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\calendar_list_view.xml"
     },
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\font_oswald_light.xml.flat",

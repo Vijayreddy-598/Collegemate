@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: nl.joery.animatedbottombar:library:1.0.6@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7b7c2b518883ccb7e8fa8f11fd4c189b/jetified-library-1.0.6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7b7c2b518883ccb7e8fa8f11fd4c189b/jetified-library-1.0.6/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/nl.joery.animatedbottombar/library/1.0.6/e7c54336345f40848d4c3043e00de0bd4b67ae43/library-1.0.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/nl.joery.animatedbottombar/library/1.0.6/80ec144d838dcba6308dc19b29d5957bb15ecf36/library-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

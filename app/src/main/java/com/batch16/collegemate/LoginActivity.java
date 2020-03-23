@@ -25,19 +25,24 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Get reference to both Email and Password Fields
         uname=findViewById(R.id.email);
         upass=findViewById(R.id.pass);
 
+        //Firebase Authentication initialization
         mAuth= FirebaseAuth.getInstance();
 
     }
     public void InClicked(View view) {
+
         String em=uname.getText().toString();
         String pas= upass.getText().toString();
-        mAuth.signInWithEmailAndPassword(em,pas)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        //Self Explanatory Sign in with Email and Password
+        mAuth.signInWithEmailAndPassword(em,pas).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //If UserEmail and Password Matches -- Successful
                         if(task.isSuccessful()){
                             Intent in=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(in);
@@ -51,10 +56,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser user=mAuth.getCurrentUser();
+        //Checking if user already logged in
         if(user!=null){
-            String name=user.getDisplayName();
+            //String name=user.getDisplayName();
             String mail=user.getEmail();
-            Toast.makeText(this, name+"\n"+mail, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, mail, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
             finish();
         }
@@ -66,9 +72,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Check Yo Mail Homie", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Check your Mail to Complete the Process", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(LoginActivity.this, "Stop Playing Fool", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Try again after some Time", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

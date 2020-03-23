@@ -60,54 +60,46 @@ public class MainActivity extends AppCompatActivity {
     //Variables for Services
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private boolean mAlreadyStartedService = false;
-    private TextView mMsgView;
     private static final String TAG = "Jay";
 
     //General Variables
     private FirebaseAuth mAuth;
     public static SharedPreferences sp;
-    SharedPreferences.Editor locationeditor;
-    DatabaseReference myRef;
-    String name,lat="0",lo="0";
-    MapFragment frg;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        frg=new MapFragment();
 
-        myRef= FirebaseDatabase.getInstance().getReference();
         //Set Bottom Navigation
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //Set UserName  From FireBaseAuth.getUserEmail
 
+        //Set UserName  From FireBaseAuth.getUserEmail
         sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
-       // spLocatication=getSharedPreferences("location",MODE_PRIVATE);
-       // locationeditor=spLocatication.edit();
+
+        //if Username is not present in SharedPreferences
         if(!sp.contains("UserName")){
+            //Firebase Authentication initialization
             mAuth= FirebaseAuth.getInstance();
             FirebaseUser user=mAuth.getCurrentUser();
 
+            //Trim mail to remove @gmail.com for more better Username
             String mail=user.getEmail();
             mail=mail.substring(0,mail.length()-10);
 
-            //Toast.makeText(this, "\n"+mail+" \n"+sp.contains("UserName"), Toast.LENGTH_SHORT).show();
-
-
+            //Save the Final String in SharedPreferences for future Reference
             SharedPreferences.Editor se=sp.edit();
             se.putString("UserName",mail);
             se.apply();
         }
+
+        //Get UserName for SharedPreferences
         name=sp.getString("UserName","");
-        //get nearbyFriends Location through Firebase.DataBase
-
-
 
     }
     @Override
@@ -220,9 +212,7 @@ public class MainActivity extends AppCompatActivity {
         //And it will be keep running until you close the entire application from task manager.
         //This method will executed only once.
 
-        if (!mAlreadyStartedService && mMsgView != null) {
-
-           /* mMsgView.setText(R.string.msg_location_service_started);*/
+        if (!mAlreadyStartedService ) {
 
             //Start location sharing service to app server.........
             Intent intent = new Intent(this, LocationMonitoringService.class);
@@ -337,14 +327,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
 
-
         //Stop location sharing service to app server.........
-
         this.stopService(new Intent(this, LocationMonitoringService.class));
         mAlreadyStartedService = false;
         //Ends................................................
-
-
         super.onDestroy();
     }
 
