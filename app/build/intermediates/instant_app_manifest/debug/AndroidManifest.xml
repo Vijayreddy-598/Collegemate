@@ -8,10 +8,7 @@
     <uses-sdk
         android:minSdkVersion="24"
         android:targetSdkVersion="28" />
-    <!--
-        <permission android:name="com.batch16.collegemate.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"/>
-    -->
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -49,6 +46,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="com.batch16.collegemate.AlarmReceiver" />
 
         <service
             android:name="com.batch16.collegemate.Functions.LocationMonitoringService"

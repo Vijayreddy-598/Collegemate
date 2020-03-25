@@ -130,7 +130,6 @@ public class LocationMonitoringService extends Service  implements LocationListe
             DatabaseReference dr=FirebaseDatabase.getInstance().getReference();
             dr.child("Users").child(Name).setValue(latLongModel);
             notifynearby(Name,lat,lon);
-           /* sendMessageToUI(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));*/
 
         }
     }
