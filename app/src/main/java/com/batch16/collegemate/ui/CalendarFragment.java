@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,6 +34,9 @@ import com.batch16.collegemate.Functions.MyDB;
 import com.batch16.collegemate.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,11 +63,14 @@ public class CalendarFragment extends Fragment {
     static int count=0;
     Button addevent,deleteevent,editevent;
     int sdate,smonth,pos;
-   ArrayAdapter adapter;
+    ArrayAdapter adapter;
+    //BottomSheet Var
+    private BottomSheetBehavior mBehavior;
+    private BottomSheetDialog mBottomSheetDialog;
+    private View bottom_sheet;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
 
         root = inflater.inflate(R.layout.fragment_calender, container, false);
@@ -94,65 +102,20 @@ public class CalendarFragment extends Fragment {
         });
 
 
-
-        deleteevent=root.findViewById(R.id.deleteevent);
-        deleteevent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteEvent(sdate,smonth,pos);
-            }
-        });
-
-
-
-        editevent=root.findViewById(R.id.editevent);
-        editevent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                Context context=root.getContext();
-                LinearLayout layout = new LinearLayout(context);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setPadding(24,24,24,24);
-
-                TextView tv=new TextView(context);
-                tv.setText("Edit Event name on "+sdate);
-                tv.setTextSize(24);
-                layout.addView(tv);
-
-                final EditText EventBox = new EditText(context);
-                EventBox.setHint("Enter Event");
-                EventBox.setInputType(InputType.TYPE_CLASS_TEXT);
-                layout.addView(EventBox);
-
-                alertDialogBuilder.setView(layout);
-                alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //What ever you want to do with the value
-                        String sevent=EventBox.getText().toString();
-                        editevent(sdate,smonth,pos,sevent);
-                        Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // what ever you want to do with No option.
-                    }
-                });
-
-                alertDialogBuilder.show();
-            }
-
-
-        });
-
+        //BottomList
+        bottom_sheet = root.findViewById(R.id.bottom_sheet);
+        mBehavior = BottomSheetBehavior.from(bottom_sheet);
 
         //ListView Code
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mutableBookings);
         bookingsListView.setAdapter(adapter);
 
+        bookingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showBottomSheetDialog(position,sdate,smonth);
+            }
+        });
 
         compactCalendarView = root.findViewById(R.id.compactcalendar_view);
         compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
@@ -268,18 +231,16 @@ public class CalendarFragment extends Fragment {
     }
 
 
-    private  void deleteEvent(int day,int month,int pos){
-        adapter.remove(adapter.getItem(pos));
-        Cursor c=my.getEventofDay(day,month);
-        c.move(pos+1);
-        int id=c.getInt(0);
-        my.deleteonID(id);
-    }
     private  void editevent(int day,int month,int pos,String event){
         Cursor c=my.getEventofDay(day,month);
         c.move(pos+1);
         int id=c.getInt(0);
-        my.editSelected(id,event);
+        ContentValues cv = new ContentValues();
+        cv.put(my.COL_1,c.getInt(0));
+        cv.put(my.COL_2,c.getInt(1));
+        cv.put(my.COL_3,c.getInt(2));
+        cv.put(my.COL_4,event);
+        my.updateevent(id,event);
         adapter.notifyDataSetChanged();
     }
 
@@ -307,22 +268,114 @@ public class CalendarFragment extends Fragment {
         currentCalender.set(Calendar.DAY_OF_MONTH, 1);
     }
 
+    // Convert Date into MilliSeconds, to add to correct Day.
+    public long datetoMillis(int year,int month,int date) {
+        Calendar calendar=Calendar.getInstance();
 
-    private void setToMidnight(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+
+        calendar.set(year, month, date);
+
+        long timeInMillis = calendar.getTimeInMillis();
+
+        return timeInMillis;
     }
 
 
-    // Convert Date into MilliSeconds, to add to correct Day.
-    public long datetoMillis(int year,int month,int date) {
-        Calendar cal=Calendar.getInstance();
-        setToMidnight(cal);
-        cal.set(year, month, date);
-        long timeInMillis = cal.getTimeInMillis();
-        return timeInMillis;
+    private void showBottomSheetDialog(final int pos,final int day,final int month){
+
+        if (mBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+
+        final View view = getLayoutInflater().inflate(R.layout.calender_events_list, null);
+
+        LinearLayout edit=view.findViewById(R.id.lyt_edit);
+        LinearLayout delete=view.findViewById(R.id.lyt_delete);
+        LinearLayout copy=view.findViewById(R.id.lyt_copy);
+
+       edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                Context context=root.getContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setPadding(24,24,24,24);
+
+                TextView tv=new TextView(context);
+                tv.setText("Edit Event name on "+sdate);
+                tv.setTextSize(24);
+                layout.addView(tv);
+
+                final EditText EventBox = new EditText(context);
+                EventBox.setHint("Enter Event");
+                EventBox.setInputType(InputType.TYPE_CLASS_TEXT);
+                layout.addView(EventBox);
+
+                alertDialogBuilder.setView(layout);
+                alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //What ever you want to do with the value
+                        String sevent=EventBox.getText().toString();
+                        editevent(sdate,smonth,pos,sevent);
+                        Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // what ever you want to do with No option.
+                    }
+                });
+
+                alertDialogBuilder.show();
+
+
+
+                Toast.makeText(getContext(), "Edit Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+       delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.remove(adapter.getItem(pos));
+                Cursor c=my.getEventofDay(day,month);
+                c.move(pos+1);
+                int id=c.getInt(0);
+                my.deleteonID(id);
+                adapter.notifyDataSetChanged();
+                compactCalendarView.removeAllEvents();
+                loadEvents();
+                Toast.makeText(getContext(), "Event Delete ", Toast.LENGTH_SHORT).show();
+
+            }
+       });
+       copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Copy Clicked", Toast.LENGTH_SHORT).show();
+            }
+       });
+
+        mBottomSheetDialog = new BottomSheetDialog(getContext());
+        mBottomSheetDialog.setContentView(view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBottomSheetDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        mBottomSheetDialog.show();
+        mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                mBottomSheetDialog = null;
+            }
+        });
     }
 
 }

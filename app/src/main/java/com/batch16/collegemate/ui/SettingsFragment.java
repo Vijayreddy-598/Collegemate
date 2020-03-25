@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceFragmentCompat;
+
 import com.batch16.collegemate.R;
 
 
@@ -16,6 +18,18 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_settings, container, false);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.settings,new SettingsFrag())
+                .commit();
+
         return root;
     }
+    public static class SettingsFrag extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preference, rootKey);
+        }
+    }
+
 }
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="User Details">
+        <EditTextPreference
+            app:key="UserName"
+            app:title="Registered Username"
+            app:useSimpleSummaryProvider="true"
+            android:enabled="false"
+            app:icon="@drawable/ic_perm_identity_black_24dp"
+            />
+
+        <EditTextPreference
+            android:icon="@drawable/ic_call_black_24dp"
+            app:key="mobilenum"
+            app:title="Contact Number"
+            android:dialogLayout="@layout/preference_mobile_edit_text"
+            app:useSimpleSummaryProvider="true"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="App Preferences">
+        <SwitchPreference
+            app:key="silentmode"
+            app:title="Silent Mode"
+            app:icon="@drawable/ic_phonelink_setup_black_24dp"
+            app:summaryOn="Automatically shift to silent mode on college premises"
+            android:summaryOff="No Changes are made"
+            app:defaultValue="true"
+            />
+        <SwitchPreferenceCompat
+            app:key="notifynearby"
+            app:title="Notify Nearby Friends"
+            app:icon="@drawable/ic_sync_black_24dp"
+            app:summaryOn="Share your location and get nearby friends location"
+            app:summaryOff="Mute Nearby Friends Feature"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout3"
+    android:id="@+id/bgLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CalendarFragment">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="15sp"
-    android:orientation="vertical"
-    tools:context=".ui.CalendarFragment">
+    android:orientation="vertical">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -70,7 +74,7 @@
             android:layout_height="300dp"
             android:layout_marginStart="2dp"
             app:compactCalendarBackgroundColor="@color/deep_purple_50"
-            app:compactCalendarCurrentDayBackgroundColor="@color/teal_900"
+            app:compactCalendarCurrentDayBackgroundColor="@color/teal_50"
             app:compactCalendarCurrentDayIndicatorStyle="fill_large_indicator"
             app:compactCalendarCurrentSelectedDayBackgroundColor="@color/purple_A400"
             app:compactCalendarCurrentSelectedDayTextColor="@color/overlay_light_90"
@@ -102,38 +106,13 @@
             android:text="Add Event"
             style="@style/Button.Colored"
             android:id="@+id/addevent"/>
-        <Button
-            android:id="@+id/editevent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Edit Event"
-            style="@style/Button.Colored"
-            />
-        <Button
-            android:id="@+id/deleteevent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Delete Event"
-            style="@style/Button.Colored"
-            />
-
         </LinearLayout>
 
- <!--  <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+</RelativeLayout>
+    <FrameLayout
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        app:rippleColor="@color/grey_5"
-        app:srcCompat="@drawable/ic_add"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:contentDescription="ExtendedFabMan"/>-->
-   </RelativeLayout>
+        app:layout_behavior="@string/bottom_sheet_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

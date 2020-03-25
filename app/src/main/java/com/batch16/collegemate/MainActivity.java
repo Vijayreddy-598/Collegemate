@@ -18,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Layout;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.batch16.collegemate.Functions.LatLongModel;
 import com.batch16.collegemate.Functions.LocationMonitoringService;
+import com.batch16.collegemate.ui.CalendarFragment;
 import com.batch16.collegemate.ui.MapFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -47,6 +49,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -100,7 +104,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Get UserName for SharedPreferences
         name=sp.getString("UserName","");
-
+        SharedPreferences sha= PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor shae=sha.edit();
+        shae.putString("UserName",name);
+        shae.apply();
     }
     @Override
     public void onResume() {
@@ -332,6 +339,12 @@ public class MainActivity extends AppCompatActivity {
         mAlreadyStartedService = false;
         //Ends................................................
         super.onDestroy();
+    }
+    public static void callcalender(){
+       /* FragmentManager fragman=getFragmentManager();
+        FragmentTransaction fragtran=fragman.beginTransaction();
+        fragtran.replace(R.id.nav_host_fragment,new CalendarFragment());
+        fragtran.commitNow();*/
     }
 
 }

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 public class MyDB extends SQLiteOpenHelper {
     public static final String TABLE_NAME="Attendance";
-    private static final String COL_1 ="ID";
+    public static final String COL_1 ="ID";
     public static final String COL_2="Day";
     public static final String COL_3="Month";
     public static final String COL_4="Event_Name";
@@ -48,16 +48,14 @@ public class MyDB extends SQLiteOpenHelper {
         SQLiteDatabase sq=this.getReadableDatabase();
         return sq.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+COL_2+" = "+day+" AND "+COL_3+" = "+month,null);
     }
-    public void editSelected(int id,String upEvent){
-        SQLiteDatabase sq=this.getReadableDatabase();
-        sq.execSQL("UPDATE "+TABLE_NAME+" SET "+COL_4+" = "+upEvent+" WHERE "+COL_1+" = "+id+" ;");
-    }
-    public void getevents(int day,int month){
-
-    }
     public void deleteonID(int id){
         SQLiteDatabase sq=this.getReadableDatabase();
         sq.execSQL("DELETE FROM "+TABLE_NAME+" WHERE "+COL_1+" = "+id+";");
+    }
+    public boolean updateevent(int id, String s) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("UPDATE "+TABLE_NAME+" SET Event_Name = "+"'"+s+"' "+ "WHERE ID = "+id );
+        return true;
     }
 
 }
