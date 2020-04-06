@@ -5,13 +5,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,13 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.fragment.app.Fragment;
 import com.batch16.collegemate.Functions.MyDB;
 import com.batch16.collegemate.R;
@@ -50,31 +45,28 @@ public class CalendarFragment extends Fragment {
 
     View root;
     private static final String TAG = "Test";
-    private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
     private SimpleDateFormat dateFormatForDisplaying = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.getDefault());
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("dd MMM", Locale.getDefault());
     private SimpleDateFormat dateFormatForYear = new SimpleDateFormat("yyyy", Locale.getDefault());
     private SimpleDateFormat dateFormatForDate = new SimpleDateFormat("EEEE", Locale.getDefault());
-    private boolean shouldShow = false;
     private CompactCalendarView compactCalendarView;
-    ListView listView;
 
     MyDB my;
-    static int count=0;
-    Button addevent,deleteevent,editevent;
+    Button addevent;
     int sdate,smonth,pos;
     ArrayAdapter adapter;
     //BottomSheet Var
     private BottomSheetBehavior mBehavior;
     private BottomSheetDialog mBottomSheetDialog;
     private View bottom_sheet;
+    List<String> mutableBookings;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         root = inflater.inflate(R.layout.fragment_calender, container, false);
-        final List<String> mutableBookings = new ArrayList<>();
+        mutableBookings = new ArrayList<>();
         final ListView bookingsListView = root.findViewById(R.id.bookings_listview);
         final TextView moView=root.findViewById(R.id.samMonth);
         final TextView yearView=root.findViewById(R.id.samYear);
@@ -128,6 +120,12 @@ public class CalendarFragment extends Fragment {
         // compactCalendarView.showCalendar();
         Calendar calendar = Calendar.getInstance();
         loadEvents();
+        //initial Date events
+        Date presdate=calendar.getTime();
+        sdate=presdate.getDate();
+        smonth=presdate.getMonth();
+        loaddayevents(smonth,sdate);
+
         yearView.setText(dateFormatForYear.format(calendar.getTime()));
         dayView.setText(dateFormatForDate.format(calendar.getTime()));
         moView.setText(dateFormatForMonth.format(calendar.getTime()));
@@ -186,7 +184,20 @@ public class CalendarFragment extends Fragment {
         return root;
     }
 
-
+    public void loaddayevents(int month,int day){
+        Calendar cal=Calendar.getInstance();
+        cal.set(2020,month,day);
+        Date newdate=cal.getTime();
+        List<Event> bookingsFromMap = compactCalendarView.getEvents(newdate);
+        if (bookingsFromMap != null) {
+            Log.d(TAG, bookingsFromMap.toString());
+            mutableBookings.clear();
+            for (Event booking : bookingsFromMap) {
+                mutableBookings.add((String) booking.getData());
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
     //Floating Action Button Add event Function
     private void open(View root) {
 
@@ -212,11 +223,13 @@ public class CalendarFragment extends Fragment {
                 //What ever you want to do with the value
                 String sevent=EventBox.getText().toString();
                 ContentValues cv=new ContentValues();
-                cv.put(my.COL_2,sdate);
-                cv.put(my.COL_3,smonth);
-                cv.put(my.COL_4,sevent);
+                cv.put(my.E_COL_2,sdate);
+                cv.put(my.E_COL_3,smonth);
+                cv.put(my.E_COL_4,sevent);
                 my.insertData(cv);
                 Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
+                loadEvents();
+                loaddayevents(smonth,sdate);
 
             }
         });
@@ -235,38 +248,32 @@ public class CalendarFragment extends Fragment {
         Cursor c=my.getEventofDay(day,month);
         c.move(pos+1);
         int id=c.getInt(0);
-        ContentValues cv = new ContentValues();
-        cv.put(my.COL_1,c.getInt(0));
-        cv.put(my.COL_2,c.getInt(1));
-        cv.put(my.COL_3,c.getInt(2));
-        cv.put(my.COL_4,event);
         my.updateevent(id,event);
         adapter.notifyDataSetChanged();
     }
 
     private void loadEvents() {
-           List<Event> events = getEvents(2);
+           List<Event> events = getEvents();
            compactCalendarView.addEvents(events);
     }
 
 
-    private List<Event> getEvents(int month) {
+    private List<Event> getEvents() {
         //Events through SQLdata
         List<Event> events=new ArrayList<>();
-        Cursor c= my.GetEventOn(month);
+        Cursor c= my.readEventdata();
         while (c.moveToNext()){
-            long timeInMillis = datetoMillis(2020,month,c.getInt(1));
-            events.add(new Event(R.color.colorPrimary, timeInMillis, "Event is " + c.getString(3)));
+            long timeInMillis = datetoMillis(2020,c.getInt(2),c.getInt(1));
+            if(c.getString(3).equalsIgnoreCase("Wassup")){
+                events.add(new Event(R.color.colorAccent, timeInMillis, "Event is " + c.getString(3)));
+            }else{
+                events.add(new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Event is " + c.getString(3)));
+            }
 
         }
        return events;
     }
 
-
-    private void addEvents(int month, int year) {
-        currentCalender.setTime(new Date());
-        currentCalender.set(Calendar.DAY_OF_MONTH, 1);
-    }
 
     // Convert Date into MilliSeconds, to add to correct Day.
     public long datetoMillis(int year,int month,int date) {
@@ -298,9 +305,8 @@ public class CalendarFragment extends Fragment {
         LinearLayout copy=view.findViewById(R.id.lyt_copy);
 
        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+           @Override public void onClick(View v) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                 Context context=root.getContext();
                 LinearLayout layout = new LinearLayout(context);
@@ -323,8 +329,13 @@ public class CalendarFragment extends Fragment {
                         //What ever you want to do with the value
                         String sevent=EventBox.getText().toString();
                         editevent(sdate,smonth,pos,sevent);
+                        adapter.clear();
                         Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
 
+                        compactCalendarView.removeAllEvents();
+                        loadEvents();
+                        loaddayevents(month,day);
+                        mBottomSheetDialog.cancel();
                     }
                 });
 
@@ -333,14 +344,11 @@ public class CalendarFragment extends Fragment {
                         // what ever you want to do with No option.
                     }
                 });
-
                 alertDialogBuilder.show();
 
 
-
-                Toast.makeText(getContext(), "Edit Clicked", Toast.LENGTH_SHORT).show();
             }
-        });
+       });
        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -350,16 +358,19 @@ public class CalendarFragment extends Fragment {
                 int id=c.getInt(0);
                 my.deleteonID(id);
                 adapter.notifyDataSetChanged();
+
                 compactCalendarView.removeAllEvents();
                 loadEvents();
-                Toast.makeText(getContext(), "Event Delete ", Toast.LENGTH_SHORT).show();
+                loaddayevents(month,day);
+                mBottomSheetDialog.cancel();
 
             }
        });
        copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Copy Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                mBottomSheetDialog.cancel();
             }
        });
 

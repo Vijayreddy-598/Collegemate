@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.batch16.collegemate.AlarmReceiver;
 import com.batch16.collegemate.BuildConfig;
 import com.batch16.collegemate.Functions.LatLongModel;
 import com.batch16.collegemate.Functions.LocationMonitoringService;
@@ -52,8 +53,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.MODE_PRIVATE;;
 
 
 public class MapFragment extends Fragment implements  OnMapReadyCallback {
@@ -63,45 +65,43 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback {
     static Marker user;
     DatabaseReference myRef;
     Activity activity;
-    String name;
-    Double lat=0.0;
-    Double lon=0.0;
-    private TextView mMsgView;
-    LatLongModel Umod,mod;
-    SharedPreferences sp;
     Location A,B;
+    //User Details
+    String name;
+    Double d1,d2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_map, container, false);
         activity = getActivity();
         myRef = FirebaseDatabase.getInstance().getReference();
-        sp = this.getActivity().getSharedPreferences("UserDetails", MODE_PRIVATE);
-        name=sp.getString("UserName",null);
-        //Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
-        A=new Location("User");
-        //mMsgView = root.findViewById(R.id.textview);
-        //MapView Intialization returns Control to onMapReady
 
+        //Get latitude and longitude set by LocationMonitoringService
+        d1=Double.parseDouble(Objects.requireNonNull(MainActivity.sp.getString("UserLat", "0.00")));
+        d2=Double.parseDouble(Objects.requireNonNull(MainActivity.sp.getString("UserLon", "0.00")));
+        name=MainActivity.sp.getString("UserName",null);
+
+        A=new Location("User");
+
+        //MapView Intialization returns Control to onMapReady
         mapView = root.findViewById(R.id.mapViewComponent);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+
+
+        //Add markers on Nearby Friends
         myRef.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                map.clear();
                 List<Marker> mark= new ArrayList<>();
-                Double d1=dataSnapshot.child(name).child("latitude").getValue(Double.class);
-                Double d2=dataSnapshot.child(name).child("longitude").getValue(Double.class);
-                String username=dataSnapshot.child(name).child("name").getValue(String.class);
                 A.setLatitude(d1);
                 A.setLongitude(d2);
                 //Toast.makeText(activity, "Name"+name+"\nLati:"+d1+"\nLongi:"+d2, Toast.LENGTH_SHORT).show();
                 updateMap(A.getLatitude(),A.getLongitude());
-                for (DataSnapshot ds:dataSnapshot.getChildren()) {
+                    for (DataSnapshot ds:dataSnapshot.getChildren()) {
                     String Uname=ds.child("name").getValue(String.class);
-                    if(!username.equals(Uname)){
+                    if(!name.equals(Uname)){
                         Double lat= ds.child("latitude").getValue(Double.class);
                         Double lon= ds.child("longitude").getValue(Double.class);
                         B=new Location("Friend");
@@ -124,19 +124,38 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback {
 
 
 
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        String latitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LATITUDE);
+                        String longitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LONGITUDE);
+                        if(latitude != null && longitude != null){
+                            updateMap(Double.parseDouble(latitude),Double.parseDouble(longitude));
+                        }
+                    }
+                }, new IntentFilter(AlarmReceiver.ACTION_LOCATION_BROADCAST)
+        );
+
+
+
+
         return root;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        user = map.addMarker(new MarkerOptions().position(new LatLng(d1,d2)).title("Your Location"));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(d1, d2), 5));
     }
 
 
-    public static void updateMap(double lat, double lon) {
-
-        user = map.addMarker(new MarkerOptions().position(new LatLng(lat,lon)).title("Your Location"));
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 15));
+    public void updateMap(double lat, double lon) {
+        LatLng newLoc=new LatLng(lat,lon);
+        user.setPosition(newLoc);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(newLoc, 15));
 
     }
     @Override

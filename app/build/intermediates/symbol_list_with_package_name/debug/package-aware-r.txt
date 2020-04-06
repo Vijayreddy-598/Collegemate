@@ -417,7 +417,9 @@ attr fontVariationSettings
 attr fontWeight
 attr foregroundInsidePadding
 attr fragment
+attr freezesAnimation
 attr gapBetweenBars
+attr gifSource
 attr goIcon
 attr graph
 attr headerLayout
@@ -455,6 +457,7 @@ attr initialExpandedChildrenCount
 attr insetForeground
 attr isLightTheme
 attr isMaterialTheme
+attr isOpaque
 attr isPreferenceVisible
 attr itemBackground
 attr itemFillColor
@@ -573,6 +576,7 @@ attr listPreferredItemPaddingStart
 attr liteMode
 attr logo
 attr logoDescription
+attr loopCount
 attr mapType
 attr materialAlertDialogBodyTextStyle
 attr materialAlertDialogTheme
@@ -1092,6 +1096,7 @@ color grey_90
 color grey_900
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color ic_launcher_background
 color indigo_100
 color indigo_200
 color indigo_300
@@ -1498,6 +1503,7 @@ dimen fab_margin
 dimen fastscroll_default_thickness
 dimen fastscroll_margin
 dimen fastscroll_minimum_range
+dimen heading_font_size
 dimen highlight_alpha_material_colored
 dimen highlight_alpha_material_dark
 dimen highlight_alpha_material_light
@@ -1693,11 +1699,13 @@ dimen spacing_xmlarge
 dimen spacing_xsmall
 dimen spacing_xxlarge
 dimen spacing_xxxlarge
+dimen subheading_font_size
 dimen subtitle_corner_radius
 dimen subtitle_outline_width
 dimen subtitle_shadow_offset
 dimen subtitle_shadow_radius
 dimen test_mtrl_calendar_day_cornerSize
+dimen text_font_size
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
 dimen tooltip_margin
@@ -1847,8 +1855,6 @@ drawable ic_file_download_black_24dp
 drawable ic_home
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
-drawable ic_launcher_background
-drawable ic_launcher_foreground
 drawable ic_location
 drawable ic_menu
 drawable ic_menu_arrow_down_black_24dp
@@ -1884,12 +1890,19 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable preference_list_divider_material
+drawable splashlogo
+drawable splashtext
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 font oswald_bold
 font oswald_light
+font oxygen_bold
+font oxygen_light
+font oxygen_mono
+font oxygen_regular
 id ALT
+id Att_rev_head
 id BOTTOM_END
 id BOTTOM_START
 id CTRL
@@ -1902,8 +1915,6 @@ id SYM
 id TOP_END
 id TOP_START
 id Title
-id Update
-id Update1
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -1973,7 +1984,6 @@ id blocking
 id bookings_listview
 id bottom
 id bottom_sheet
-id but
 id buttonPanel
 id cancel_action
 id cancel_button
@@ -2012,6 +2022,8 @@ id dialog_button
 id dimensions
 id direct
 id disableHome
+id dndaccess
+id dndrequest
 id dropdown_menu
 id edit_query
 id email
@@ -2137,6 +2149,7 @@ id pin
 id progress_circular
 id progress_horizontal
 id radio
+id recycler
 id recycler_view
 id right
 id rightArrow
@@ -2196,6 +2209,7 @@ id status_bar_latest_event_content
 id stretch
 id submenuarrow
 id submit_area
+id subtitle
 id switchWidget
 id tabMode
 id tag_accessibility_actions
@@ -2311,6 +2325,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_login
 layout activity_main
+layout activity_splashscreen
 layout calendar_list_view
 layout calender_events_list
 layout custom_dialog
@@ -2334,6 +2349,7 @@ layout fragment_calender
 layout fragment_home
 layout fragment_map
 layout fragment_settings
+layout home_recycler_adapter
 layout image_frame
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
@@ -2414,11 +2430,11 @@ layout text_view_without_line_height
 menu bottom_nav_menu
 menu calender_menu
 mipmap avatar
-mipmap calendar
 mipmap college_logo
+mipmap dndscreen
 mipmap ic_launcher
+mipmap ic_launcher_foreground
 mipmap ic_launcher_round
-mipmap mapsfragment
 navigation mobile_navigation
 plurals mtrl_badge_content_description
 string abc_action_bar_home_description
@@ -3326,6 +3342,8 @@ styleable ForegroundLinearLayout android_foreground android_foregroundGravity fo
 styleable Fragment android_name android_id android_tag
 styleable FragmentContainerView android_name android_tag
 styleable FragmentNavigator android_name
+styleable GifTextureView gifSource isOpaque
+styleable GifView freezesAnimation loopCount
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
 styleable GradientColorItem android_color android_offset
 styleable LinearConstraintLayout android_orientation

@@ -49,12 +49,15 @@ import java.util.List;
 
 public class LocationMonitoringService extends Service  implements LocationListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
         {
-    private static final String TAG = "Jay";
+    private static final String TAG = "Collegemate";
+            public static  String EXTRA_LATITUDE = "";
+            public static  String EXTRA_LONGITUDE="";
+            String lat,lon;
     GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest = new LocationRequest();
     DatabaseReference myRef;
-    Location A,B;
     String Name;
+            public static final String ACTION_LOCATION_BROADCAST = LocationMonitoringService.class.getName() + "LocationBroadcast";
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mLocationClient = new GoogleApiClient.Builder(this)
@@ -68,14 +71,18 @@ public class LocationMonitoringService extends Service  implements LocationListe
 
 
         int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
+
         //PRIORITY_BALANCED_POWER_ACCURACY, PRIORITY_LOW_POWER, PRIORITY_NO_POWER are the other priority modes
 
         mLocationRequest.setPriority(priority);
         mLocationClient.connect();
+
         myRef = FirebaseDatabase.getInstance().getReference();
-        //Make it stick to the notification panel so it is less prone to get cancelled by the Operating System.
+
         Name=MainActivity.sp.getString("UserName",null);
-        Log.i(TAG, "onStartCommand: "+Name);
+        Log.i(TAG, "onLocationStartCommand: "+Name);
+
+        //Make it stick to the notification panel so it is less prone to get cancelled by the Operating System.
         return START_STICKY;
     }
     @Nullable
@@ -122,71 +129,26 @@ public class LocationMonitoringService extends Service  implements LocationListe
 
         if (location != null) {
             Log.d(TAG, "== location != null");
-            //Upload to dataBase
-            Double lat=location.getLatitude();
-            Double lon=location.getLongitude();
-            Toast.makeText(getApplicationContext(), "Location Updating", Toast.LENGTH_SHORT).show();
-            LatLongModel latLongModel=new LatLongModel(lat,lon,Name);
-            DatabaseReference dr=FirebaseDatabase.getInstance().getReference();
-            dr.child("Users").child(Name).setValue(latLongModel);
-            notifynearby(Name,lat,lon);
+            lat=String.valueOf(location.getLatitude());
+            lon= String.valueOf(location.getLongitude());
+            //Update to local Shared Prefs
+            SharedPreferences sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
+            SharedPreferences.Editor se=sp.edit();
+            se.putString("UserLat",lat);
+            se.putString("UserLon",lon);
+            se.apply();
+            //Update to Firebase
+            LatLongModel latLongModel=new LatLongModel(location.getLatitude(),location.getLatitude(),Name);
+            myRef= FirebaseDatabase.getInstance().getReference();
+            myRef.child("Users").child(Name).setValue(latLongModel);
+            //Local Broadcast Intent
+            Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
+            intent.putExtra(EXTRA_LATITUDE, lat);
+            intent.putExtra(EXTRA_LONGITUDE, lon);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
         }
     }
-    public void notifynearby(final String userName,Double lat,Double lon){
-        A=new Location("User");
-        A.setLatitude(lat);
-        A.setLongitude(lon);
-        myRef.child("Users").addValueEventListener(new ValueEventListener() {
-
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Marker> mark= new ArrayList<>();
-                for (DataSnapshot ds:dataSnapshot.getChildren()) {
-                    String Uname=ds.child("name").getValue(String.class);
-                    if(!userName.equals(Uname)){
-                        Double lat= ds.child("latitude").getValue(Double.class);
-                        Double lon= ds.child("longitude").getValue(Double.class);
-                        B=new Location("Friend");
-                        B.setLongitude(lon);
-                        B.setLatitude(lat);
-                        float dis=A.distanceTo(B);
-                        double kmdis=dis/1000;
-                            if(kmdis<=1.00) {
-                                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                    String Channel_Id = "NotificationID";
-                                    if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-                                        NotificationChannel notificationChannel =
-                                                new NotificationChannel(Channel_Id,"MY_NOTI", NotificationManager.IMPORTANCE_DEFAULT);
-                                        notificationManager.createNotificationChannel(notificationChannel);
-                                    }
-                                    NotificationCompat.Builder notification =
-                                            new NotificationCompat.Builder(getApplicationContext(),Channel_Id);
-                                    notification.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
-                                    notification.setContentTitle("Nearby Friend");
-                                    notification.setContentText(" "+Uname+" is Near you"+" Catchup If possible");
-                                    Intent intent = new Intent(getApplicationContext(),MapFragment.class);
-                                    PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),42,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                                    notification.setContentIntent(pendingIntent);
-                                    notification.setAutoCancel(true);
-                                    notificationManager.notify(42,notification.build());
-
-                                }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
-
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

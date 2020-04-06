@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
 MERGED from [androidx.navigation:navigation-ui:2.2.1] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\729df82f33244073405855cbe51c3125\navigation-ui-2.2.1\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\fbd0a16aafb1b0a92976acf257407bc8\material-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.github.sundeepk:compact-calendar-view:3.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\a50470f814646b03ca8a8c7d26ae8929\jetified-compact-calendar-view-3.0.0\AndroidManifest.xml:2:1-11:12
@@ -18,6 +18,7 @@ MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Jay\.gradle\cache
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\cbf85eafb2135059195621735f3069f3\jetified-play-services-maps-17.0.0\AndroidManifest.xml:17:1-38:12
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\5c617d50674c865109ed11e7941808ff\jetified-play-services-location-17.0.0\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-auth:19.2.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\ba7d8a809109088548ae61f0397baa3f\jetified-firebase-auth-19.2.0\AndroidManifest.xml:17:1-42:12
+MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.19] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b77f58a069a2d052472181dbcb4f69be\jetified-android-gif-drawable-1.2.19\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.appcompat:appcompat-resources:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b0eaf612bce50a912b10bc7942e08442\jetified-appcompat-resources-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b5751372b32c5fe126b80885f89cd53e\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\03a85fc88a555699a4e44cbd3773f52b\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -75,20 +76,21 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Jay\.gradle\cach
 MERGED from [androidx.print:print:1.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\e1dfecc1817a775d422a198d30117593\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\1ee28e926db992a8af034536b837c173\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-database-collection:17.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\feb367be06ee9c80e8788bf44da14f78\jetified-firebase-database-collection-17.0.0\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
+MERGED from [pl.droidsonroids:relinker:1.3.1] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\fcf503003a595ab6408ce2ffcbaf03a3\jetified-relinker-1.3.1\AndroidManifest.xml:2:1-7:12
+INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
 	package
 		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:3:5-38
 		INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
 		INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
 		INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-43:12
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:1-48:12
 		INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:2:11-69
@@ -136,8 +138,16 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.2.2] C:
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.2.2] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\eeed36d2325b62ad6d2e70707beb7913\jetified-play-services-measurement-sdk-api-17.2.2\AndroidManifest.xml:23:5-67
 	android:name
 		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:8:22-64
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:9:22-77
+uses-permission#android.permission.ACCESS_NOTIFICATION_POLICY
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:10:5-85
+	android:name
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:10:22-82
 application
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:10:5-41:19
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:12:5-46:19
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\fbd0a16aafb1b0a92976acf257407bc8\material-1.1.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\fbd0a16aafb1b0a92976acf257407bc8\material-1.1.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\869c1430aefa3563215fd828ed9e67ea\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
@@ -195,63 +205,67 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Ja
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\13c5e5eb30313edb16cd523337f0b5af\core-1.1.0\AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:15:9-35
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:17:9-35
 	android:label
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:13:9-41
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:15:9-41
 	android:roundIcon
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:14:9-54
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:16:9-54
 	android:icon
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:12:9-43
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:14:9-43
 	android:allowBackup
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:11:9-35
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:13:9-35
 	android:theme
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:16:9-40
-activity#com.batch16.collegemate.MainActivity
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:17:9-20:20
-	android:label
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:19:13-45
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:18:9-40
+activity#com.batch16.collegemate.Functions.Splashscreen
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:19:9-24:20
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:18:13-41
-activity#com.batch16.collegemate.LoginActivity
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:21:9-28:20
-	android:label
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:23:13-40
-	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:22:13-42
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:19:19-57
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:24:13-27:29
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:20:13-23:29
 action#android.intent.action.MAIN
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:25:17-69
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:21:17-69
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:25:25-66
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:21:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:26:17-77
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:22:17-77
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:26:27-74
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:22:27-74
+activity#com.batch16.collegemate.MainActivity
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:25:9-27:57
+	android:label
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:27:13-45
+	android:name
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:26:13-41
+activity#com.batch16.collegemate.LoginActivity
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:28:9-31:20
+	android:label
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:30:13-40
+	android:name
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:29:13-42
 receiver#com.batch16.collegemate.AlarmReceiver
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:30:9-50
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:33:9-51
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:30:19-48
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:33:19-48
 service#com.batch16.collegemate.Functions.LocationMonitoringService
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:31:9-34:39
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:35:9-38:39
 	android:enabled
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:33:13-35
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:37:13-35
 	android:exported
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:34:13-36
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:38:13-36
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:32:13-64
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:36:13-64
 meta-data#com.google.android.maps.v2.API_KEY
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:35:9-37:71
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:40:9-42:71
 	android:value
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:37:13-68
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:42:13-68
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:36:13-62
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:41:13-62
 meta-data#preloaded_fonts
-ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:38:9-40:57
+ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:43:9-45:57
 	android:resource
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:40:13-54
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:45:13-54
 	android:name
-		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:39:13-43
+		ADDED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml:44:13-43
 uses-sdk
 INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
@@ -284,6 +298,8 @@ MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\Jay\
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\5c617d50674c865109ed11e7941808ff\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-auth:19.2.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\ba7d8a809109088548ae61f0397baa3f\jetified-firebase-auth-19.2.0\AndroidManifest.xml:21:5-44
 MERGED from [com.google.firebase:firebase-auth:19.2.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\ba7d8a809109088548ae61f0397baa3f\jetified-firebase-auth-19.2.0\AndroidManifest.xml:21:5-44
+MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.19] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b77f58a069a2d052472181dbcb4f69be\jetified-android-gif-drawable-1.2.19\AndroidManifest.xml:5:5-7:41
+MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.19] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b77f58a069a2d052472181dbcb4f69be\jetified-android-gif-drawable-1.2.19\AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.appcompat:appcompat-resources:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b0eaf612bce50a912b10bc7942e08442\jetified-appcompat-resources-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.appcompat:appcompat-resources:1.1.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b0eaf612bce50a912b10bc7942e08442\jetified-appcompat-resources-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\b5751372b32c5fe126b80885f89cd53e\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
@@ -398,6 +414,8 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Jay\.gradle\cach
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\1ee28e926db992a8af034536b837c173\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-database-collection:17.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\feb367be06ee9c80e8788bf44da14f78\jetified-firebase-database-collection-17.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-database-collection:17.0.0] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\feb367be06ee9c80e8788bf44da14f78\jetified-firebase-database-collection-17.0.0\AndroidManifest.xml:5:5-44
+MERGED from [pl.droidsonroids:relinker:1.3.1] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\fcf503003a595ab6408ce2ffcbaf03a3\jetified-relinker-1.3.1\AndroidManifest.xml:5:5-43
+MERGED from [pl.droidsonroids:relinker:1.3.1] C:\Users\Jay\.gradle\caches\transforms-2\files-2.1\fcf503003a595ab6408ce2ffcbaf03a3\jetified-relinker-1.3.1\AndroidManifest.xml:5:5-43
 INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
 INJECTED from D:\Andro Projects\CollegeMate\app\src\main\AndroidManifest.xml
 	android:targetSdkVersion

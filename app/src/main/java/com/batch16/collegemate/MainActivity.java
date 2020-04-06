@@ -3,6 +3,7 @@ package com.batch16.collegemate;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,17 +12,25 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.media.RatingCompat;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.batch16.collegemate.Functions.LocationMonitoringService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -34,6 +43,7 @@ import com.google.firebase.auth.FirebaseUser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.provider.FontsContractCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -52,32 +62,35 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public static SharedPreferences sp;
     String name;
-    TextView tv;
-
+    //For Alarm Receiver Usage
+    public static NotificationManager notificationManager;
+    public static AudioManager myAudioManager;
+    //TextView tv;
+    public static Context ctx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv=findViewById(R.id.test);
+        ctx=getApplicationContext();
 
+        notificationManager  = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        myAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         //Set Bottom Navigation
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-
         //Set UserName  From FireBaseAuth.getUserEmail
         sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
+
         //if Username is not present in SharedPreferences
         if(!sp.contains("UserName")){
             //Firebase Authentication initialization
             mAuth= FirebaseAuth.getInstance();
             FirebaseUser user=mAuth.getCurrentUser();
-
             //Trim mail to remove @gmail.com for more better Username
             String mail=user.getEmail();
             mail=mail.substring(0,mail.length()-10);
-
             //Save the Final String in SharedPreferences for future Reference
             SharedPreferences.Editor se=sp.edit();
             se.putString("UserName",mail);
@@ -85,43 +98,21 @@ public class MainActivity extends AppCompatActivity {
         }
         //Get UserName for SharedPreferences
         name=sp.getString("UserName","");
-        SharedPreferences sha= PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor shae=sha.edit();
-        shae.putString("UserName",name);
-        shae.apply();
 
-        startAlarm();
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        String Val = intent.getStringExtra(AlarmReceiver.EXTRA);
-                        android.icu.util.Calendar cal= android.icu.util.Calendar.getInstance();
-                        SimpleDateFormat df=new SimpleDateFormat("hh:mm:ss");
-                        String time=df.format(cal.getTime());
-                        String txt=tv.getText().toString();
-                        tv.setText(txt+"\n>"+time);
-                    }
-                }, new IntentFilter(AlarmReceiver.ACTION_LOCATION_BROADCAST)
-        );
-
+        //startAlarm();
     }
     @Override
     public void onResume() {
         super.onResume();
-        //startStep1();
+        startStep1();
     }
 
     private void startAlarm() {
         Calendar cal=Calendar.getInstance();
-        SimpleDateFormat df=new SimpleDateFormat("hh:mm:ss");
-        tv.setText("Alarm Set at "+df.format(cal.getTime()));
-
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intent, 0);
-        Log.i(TAG, "startAlarmService: ");
-        tv.setText(tv.getText()+"\n"+"Starting Alarm Service");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),1, intent, 0);
+        //Log.i(TAG, "startAlarmService: ");
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),60*1000,pendingIntent);
 
     }

@@ -7,56 +7,109 @@
     android:orientation="vertical"
     tools:context=".ui.HomeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/oswald_bold"
-        android:gravity="center"
-        android:text="Attendance Review"
-        android:textSize="30sp" />
-
     <androidx.cardview.widget.CardView
         style="@style/MyCustomCardTheme"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp">
 
+            <TextView
+                android:id="@+id/Att_rev_head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/oxygen_bold"
+                android:text="Attendance Review"
+                android:textSize="20sp" />
+
             <LinearLayout
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Att_rev_head">
 
                 <TextView
                     android:id="@+id/textscore"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/oxygen_regular"
                     android:text="Score:"
-                    android:textSize="24sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2sp"
-                    android:layout_marginLeft="22sp"
-                    android:text="XXXX"
-                    android:textSize="24sp" />
+                    android:layout_height="match_parent"
+                    android:text="Not Yet Ready"
+                    android:textSize="14sp"
+                    android:gravity="center"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/GeneralText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout"
-                android:text="Keep Up The Good Work" />
+                android:textSize="16sp"
+                android:text="Labs helps a lot in attendace and theory concepts."
+                />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MyCustomCardTheme"
+        android:visibility="gone"
+        android:id="@+id/dndrequest">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fix Access for Smooth Experience"
+                android:textSize="@dimen/subheading_font_size"
+                android:fontFamily="@font/oxygen_light"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/oxygen_bold"
+                android:text="Do Not Distrub Access"
+                android:textSize="@dimen/heading_font_size"
+                android:textColor="@android:color/black" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="DND Access is necessary for Auto Silent"
+                    android:textSize="@dimen/text_font_size" />
+                <Button
+                    android:layout_width="0sp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/Button.Colored"
+                    android:text="Fix"
+                    android:id="@+id/dndaccess"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -69,189 +122,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/oswald_bold"
-                android:gravity="center"
-                android:text="Calender Updates"
-                android:textSize="30sp" />
-
-            <androidx.cardview.widget.CardView
-                style="@style/MyCustomCardTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10sp">
-
-                    <TextView
-                        android:id="@+id/Update"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="JNTUA Academic Calendar released"
-                        android:textSize="18sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/Update"
-                        android:gravity="end"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ignore"
-                            android:theme="@style/Button.White" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Update"
-                            android:theme="@style/Button.White" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                style="@style/MyCustomCardTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10sp">
-
-                    <TextView
-                        android:id="@+id/Update1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:text="Assignments Updated"
-                        android:textSize="18sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/Update1"
-                        android:gravity="end"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ignore"
-                            android:theme="@style/Button.White" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Update"
-                            android:theme="@style/Button.White" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/oswald_bold"
+                android:fontFamily="@font/oxygen_bold"
                 android:gravity="center"
                 android:text="Notifications"
-                android:textSize="30sp" />
-
-            <androidx.cardview.widget.CardView
-                style="@style/MyCustomCardTheme"
+                android:textSize="20sp" />
+            <androidx.recyclerview.widget.RecyclerView
+                class="androidx.appcompat.app.AlertController$RecycleListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/oswald_bold"
-                        android:text="Basic protective measures against the new coronavirus" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1.Wash your hands frequently\n2.Maintain social distancing\n3.Avoid touching eyes, nose and mouth\n4.If you have fever, cough and difficulty breathing, seek medical care early" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                style="@style/MyCustomCardTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/oswald_bold"
-                        android:text="CollegeFest Activities/Timings" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1.A activity      X0.00-X0.00 \n2.B activity      X0.00-X0.00\n3.C activity      X0.00-X0.00\n4.D activity      X0.00-X0.00 \n" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                style="@style/MyCustomCardTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/oswald_bold"
-                        android:text="Basic protective measures against the new coronavirus" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1.Wash your hands frequently\n2.Maintain social distancing\n3.Avoid touching eyes, nose and mouth\n4.If you have fever, cough and difficulty breathing, seek medical care early" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                style="@style/MyCustomCardTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/oswald_bold"
-                        android:text="CollegeFest Activities/Timings" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1.A activity      X0.00-X0.00 \n2.B activity      X0.00-X0.00\n3.C activity      X0.00-X0.00\n4.D activity      X0.00-X0.00 \n" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:layout_height="match_parent"
+                android:id="@+id/recycler"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

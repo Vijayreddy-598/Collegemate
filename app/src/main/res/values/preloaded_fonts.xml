@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/oswald_bold</item>
         <item>@font/oswald_light</item>
+        <item>@font/oxygen_regular</item>
     </array>
 </resources>
