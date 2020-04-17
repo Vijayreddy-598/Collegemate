@@ -1,20 +1,23 @@
 package com.batch16.collegemate;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.media.AudioManager;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.NavDeepLinkBuilder;
+import androidx.preference.PreferenceManager;
 
 import com.batch16.collegemate.Functions.LatLongModel;
 import com.batch16.collegemate.Functions.MyDB;
@@ -25,7 +28,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,15 +38,18 @@ public class AlarmReceiver extends BroadcastReceiver {
     DatabaseReference myRef;
     long min,max;
     Location A,B;
+    Context Alaramctx;
     public static final String ACTION_LOCATION_BROADCAST = AlarmReceiver.class.getName() + "LocationBroadcast";
+    int count;
+    SharedPreferences sharedPreferences;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         //For Checking
-        NotificationHelper notificationHelper = new NotificationHelper(context);
         Calendar cal=Calendar.getInstance();
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotification("Alarm","Alarm Working Fine at "+cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE)+":"+cal.get(Calendar.SECOND));
-        notificationHelper.getManager().notify(1, nb.build());
+        Alaramctx=context;
+        checkNear=false;
         Log.i("Collegemate", "on Alarm Receive: ");
         //Check time if it is between 9.30-10.30
         cal.set(Calendar.HOUR,9);
@@ -66,7 +71,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 cv.put(my.A_COL_3,cal.get(Calendar.MONTH));
                 if(kmdis<=1.00) {
                     cv.put(my.A_COL_4,"$Present");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !MainActivity.notificationManager.isNotificationPolicyAccessGranted()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !MainActivity.notificationManager.isNotificationPolicyAccessGranted() && sharedPreferences.getBoolean("silentmode",true)) {
                         MainActivity.myAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
                     }
                 }else{
@@ -79,35 +84,33 @@ public class AlarmReceiver extends BroadcastReceiver {
             checkNear=true;
         }
 
-        /*Why written??
-        Intent inte = new Intent(ACTION_LOCATION_BROADCAST);
-        //intent.putExtra(EXTRA, 1);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(inte);*/
-
         //Get Location of User set by LocationMonitoringService
         Double lat=Double.parseDouble(MainActivity.sp.getString("UserLat","0.00"));
         Double lon=Double.parseDouble(MainActivity.sp.getString("UserLon","0.00"));
         String Name=MainActivity.sp.getString("UserName",null);
         //Update userlocation to Firebase
-        Toast.makeText(context, "Location Updating", Toast.LENGTH_SHORT).show();
-        LatLongModel latLongModel=new LatLongModel(lat,lon,Name);
-        myRef= FirebaseDatabase.getInstance().getReference();
-        myRef.child("Users").child(Name).setValue(latLongModel);
-        if (checkNear){
+
+        if(sharedPreferences.getBoolean("notifynearby",true)){
+            //Toast.makeText(context, "Location Updating", Toast.LENGTH_SHORT).show();
+            LatLongModel latLongModel=new LatLongModel(lat,lon,Name);
+            myRef= FirebaseDatabase.getInstance().getReference();
+            myRef.child("Users").child(Name).setValue(latLongModel);
             notifynearby(Name,lat,lon,context);
         }
+
 
     }
 
     //Show Notification if anyone is nearby
-    public void notifynearby(final String userName, Double lat, Double lon, final Context context){
+    public void notifynearby(final String userName, Double lat, Double lon, Context context){
         A=new Location("User");
         A.setLatitude(lat);
         A.setLongitude(lon);
         myRef.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Marker> mark= new ArrayList<>();
+                count=0;
+                StringBuilder prnds=new StringBuilder();
                 for (DataSnapshot ds:dataSnapshot.getChildren()) {
                     String Uname=ds.child("name").getValue(String.class);
                     if(!userName.equals(Uname)){
@@ -119,12 +122,20 @@ public class AlarmReceiver extends BroadcastReceiver {
                         float dis=A.distanceTo(B);
                         double kmdis=dis/1000;
                         if(kmdis<=1.00) {
-
-                            NotificationHelper notificationHelper=new NotificationHelper(context);
-                            NotificationCompat.Builder nb=notificationHelper.getChannelNotification("Friend Popup","Your buddy "+Uname+" is around you");
-                            notificationHelper.getManager().notify(1,nb.build());
-
+                            count++;
+                            prnds.append(Uname+" ");
                         }
+                        //Address a group or individual friends
+                        NotificationHelper notificationHelper=new NotificationHelper(Alaramctx);
+                       if(count>2){
+                           NotificationCompat.Builder nb=notificationHelper.getChannelNotification("Nearby Friends Notification","Your buddies are around you");
+                           notificationHelper.getManager().notify(1,nb.build());
+                       }else if(count<=2 && count>=1 ){
+                           NotificationCompat.Builder nb=notificationHelper.getChannelNotification("Nearby Friends Notification","Your buddy "+prnds.toString()+" is around you");
+                           notificationHelper.getManager().notify(1,nb.build());
+                       }else{
+
+                       }
                     }
                 }
             }

@@ -44,10 +44,6 @@
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\activity_splashscreen.xml"
     },
     {
-        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_calendar_list_view.xml.flat",
-        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\calendar_list_view.xml"
-    },
-    {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_calender.xml.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\ic_calender.xml"
     },
@@ -72,6 +68,10 @@
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\menu\\calender_menu.xml"
     },
     {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_intro_1_admin_notif.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\intro_1_admin_notif.xml"
+    },
+    {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_foreground.png.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_foreground.png"
     },
@@ -86,6 +86,10 @@
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_calender_events_list.xml.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\calender_events_list.xml"
+    },
+    {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_map_ic_refresh_24dp.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\map_ic_refresh_24dp.xml"
     },
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_sync_black_24dp.xml.flat",
@@ -110,6 +114,10 @@
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_intro_4_calender.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\intro_4_calender.xml"
     },
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_home.xml.flat",
@@ -150,6 +158,10 @@
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_keyboard_arrow_left_black_24dp.xml.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\ic_keyboard_arrow_left_black_24dp.xml"
+    },
+    {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_intro_2_silentmode.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\intro_2_silentmode.xml"
     },
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_keyboard_arrow_right_black_24dp.xml.flat",
@@ -220,6 +232,10 @@
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_intro_3_nearbyfriends.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\intro_3_nearbyfriends.xml"
+    },
+    {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
@@ -232,15 +248,19 @@
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\ic_phonelink_setup_black_24dp.xml"
     },
     {
-        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_home_recycler_adapter.xml.flat",
-        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\home_recycler_adapter.xml"
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_preference_mobile_edit_text.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\preference_mobile_edit_text.xml"
     },
     {
         "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_preference_mobile_edit_text.xml.flat",
-        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\preference_mobile_edit_text.xml"
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_home_recycler_adapter.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\layout\\home_recycler_adapter.xml"
+    },
+    {
+        "merged": "D:\\Andro Projects\\CollegeMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_intro_0_book_lover.xml.flat",
+        "source": "D:\\Andro Projects\\CollegeMate\\app\\src\\main\\res\\drawable\\intro_0_book_lover.xml"
     }
 ]

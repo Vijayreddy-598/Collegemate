@@ -50,14 +50,15 @@ import java.util.List;
 public class LocationMonitoringService extends Service  implements LocationListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
         {
     private static final String TAG = "Collegemate";
-            public static  String EXTRA_LATITUDE = "";
-            public static  String EXTRA_LONGITUDE="";
-            String lat,lon;
+    public static  String EXTRA_LATITUDE = "";
+    public static  String EXTRA_LONGITUDE="";
+    String lat,lon;
     GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest = new LocationRequest();
     DatabaseReference myRef;
     String Name;
-            public static final String ACTION_LOCATION_BROADCAST = LocationMonitoringService.class.getName() + "LocationBroadcast";
+    public static final String ACTION_LOCATION_BROADCAST = LocationMonitoringService.class.getName() + "LocationBroadcast";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mLocationClient = new GoogleApiClient.Builder(this)
@@ -66,8 +67,8 @@ public class LocationMonitoringService extends Service  implements LocationListe
                 .addApi(LocationServices.API)
                 .build();
 
-        mLocationRequest.setInterval(60000);
-        mLocationRequest.setFastestInterval(30000);
+        mLocationRequest.setInterval(5*60*1000);
+        mLocationRequest.setFastestInterval(1*60*1000);
 
 
         int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
@@ -128,19 +129,23 @@ public class LocationMonitoringService extends Service  implements LocationListe
         Log.d(TAG, "Location changed");
 
         if (location != null) {
+
             Log.d(TAG, "== location != null");
             lat=String.valueOf(location.getLatitude());
             lon= String.valueOf(location.getLongitude());
+
             //Update to local Shared Prefs
             SharedPreferences sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
             SharedPreferences.Editor se=sp.edit();
             se.putString("UserLat",lat);
             se.putString("UserLon",lon);
             se.apply();
+
             //Update to Firebase
             LatLongModel latLongModel=new LatLongModel(location.getLatitude(),location.getLatitude(),Name);
             myRef= FirebaseDatabase.getInstance().getReference();
             myRef.child("Users").child(Name).setValue(latLongModel);
+
             //Local Broadcast Intent
             Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
             intent.putExtra(EXTRA_LATITUDE, lat);
@@ -153,6 +158,5 @@ public class LocationMonitoringService extends Service  implements LocationListe
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "Failed to connect to Google API");
-
     }
 }

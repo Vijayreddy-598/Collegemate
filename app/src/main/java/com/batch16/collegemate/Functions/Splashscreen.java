@@ -10,7 +10,7 @@ import com.batch16.collegemate.LoginActivity;
 import com.batch16.collegemate.R;
 
 public class Splashscreen extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 1500;
+    private final int SPLASH_DISPLAY_LENGTH = 1300;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

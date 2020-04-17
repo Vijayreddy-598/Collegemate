@@ -15,8 +15,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="3"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
         <ImageView
@@ -35,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="YYYY"
                 android:textColor="@color/grey_900"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/samMonth"
                 android:layout_width="wrap_content"
@@ -43,7 +42,7 @@
                 android:gravity="center"
                 android:text="XX MMM"
                 android:textColor="@color/grey_900"
-                android:textSize="20sp" />
+                android:textSize="40sp" />
             <TextView
                 android:id="@+id/Day"
                 android:layout_width="wrap_content"
@@ -51,7 +50,7 @@
                 android:text="Sunday"
                 android:fontFamily="@font/oswald_bold"
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
         </LinearLayout>
         <ImageView
             android:id="@+id/rightArrow"
@@ -62,8 +61,7 @@
    <com.github.sundeepk.compactcalendarview.CompactCalendarView
             android:id="@+id/compactcalendar_view"
             android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="6"
+            android:layout_height="275sp"
             android:layout_marginStart="2dp"
             app:compactCalendarBackgroundColor="@color/deep_purple_50"
             app:compactCalendarCurrentDayBackgroundColor="@color/teal_50"
@@ -75,6 +73,7 @@
             app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="true"
             app:compactCalendarTextColor="@color/overlay_dark_60"
             app:compactCalendarTextSize="15sp"
+            app:compactCalendarTargetHeight="300sp"
             android:layout_below="@+id/linearLayout"
          />
 
@@ -85,13 +84,17 @@
             style="@style/Button.Colored"
             android:id="@+id/addevent"
             android:layout_below="@+id/compactcalendar_view"/>
-        <ListView
-            android:id="@+id/bookings_listview"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="6"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/addevent">
-        </ListView>
+            <ListView
+                android:id="@+id/bookings_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
+        </ScrollView>
+
 </LinearLayout>
     <FrameLayout
         android:id="@+id/bottom_sheet"

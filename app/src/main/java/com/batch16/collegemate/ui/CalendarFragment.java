@@ -89,7 +89,7 @@ public class CalendarFragment extends Fragment {
         addevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open(root);
+                addevent(root);
             }
         });
 
@@ -113,10 +113,10 @@ public class CalendarFragment extends Fragment {
         compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
         //compactCalendarView.setIsRtl(false);
-        //compactCalendarView.displayOtherMonthDays(false);
+        //compactCalendarView.displayOtherMonthDays(true);
         //For Animation Open
         //compactCalendarView.showCalendarWithAnimation();
-        //For Noramal Open
+        //For Normal Open
         // compactCalendarView.showCalendar();
         Calendar calendar = Calendar.getInstance();
         loadEvents();
@@ -178,9 +178,6 @@ public class CalendarFragment extends Fragment {
 
 
 
-
-
-
         return root;
     }
 
@@ -199,7 +196,7 @@ public class CalendarFragment extends Fragment {
         }
     }
     //Floating Action Button Add event Function
-    private void open(View root) {
+    private void addevent(View root) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         Context context=root.getContext();
@@ -220,7 +217,7 @@ public class CalendarFragment extends Fragment {
         alertDialogBuilder.setView(layout);
         alertDialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //What ever you want to do with the value
+                //Add Event to SQLite
                 String sevent=EventBox.getText().toString();
                 ContentValues cv=new ContentValues();
                 cv.put(my.E_COL_2,sdate);
@@ -228,8 +225,11 @@ public class CalendarFragment extends Fragment {
                 cv.put(my.E_COL_4,sevent);
                 my.insertData(cv);
                 Toast.makeText(getContext(),"success",Toast.LENGTH_SHORT).show();
-                loadEvents();
-                loaddayevents(smonth,sdate);
+                //Add Event to present Calendar
+                long timeInMillis = datetoMillis(2020,smonth,sdate);
+                compactCalendarView.addEvent(new Event(R.color.colorAccent, timeInMillis, "Event is " + sevent));
+                mutableBookings.add(sevent);
+                /*loaddayevents(smonth,sdate);*/
 
             }
         });
@@ -305,7 +305,6 @@ public class CalendarFragment extends Fragment {
         LinearLayout copy=view.findViewById(R.id.lyt_copy);
 
        edit.setOnClickListener(new View.OnClickListener() {
-
            @Override public void onClick(View v) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                 Context context=root.getContext();

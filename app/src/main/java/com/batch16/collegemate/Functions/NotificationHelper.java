@@ -3,12 +3,15 @@ package com.batch16.collegemate.Functions;
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+import androidx.navigation.NavDeepLinkBuilder;
 
+import com.batch16.collegemate.MainActivity;
 import com.batch16.collegemate.R;
 
 public class NotificationHelper extends ContextWrapper {
@@ -40,9 +43,11 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getChannelNotification(String Title, String text) {
-        return new NotificationCompat.Builder(getApplicationContext(), channelID)
+        Context ctx=getApplicationContext();
+        return new NotificationCompat.Builder(ctx, channelID)
                 .setContentTitle(Title)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.ic_perm_identity_black_24dp);
+                .setSmallIcon(R.drawable.ic_perm_identity_black_24dp)
+                .setContentIntent(new NavDeepLinkBuilder(ctx).setComponentName(MainActivity.class).setGraph(R.navigation.mobile_navigation).setDestination(R.id.navigation_map).createPendingIntent());
     }
 }

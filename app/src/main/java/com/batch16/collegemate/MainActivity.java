@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.batch16.collegemate.Functions.IntroActivity;
 import com.batch16.collegemate.Functions.LocationMonitoringService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -54,7 +56,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     //Variables for Services
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
+    public static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     private boolean mAlreadyStartedService = false;
     private static final String TAG = "Jay";
 
@@ -67,11 +69,28 @@ public class MainActivity extends AppCompatActivity {
     public static AudioManager myAudioManager;
     //TextView tv;
     public static Context ctx;
+
+    //Intro
+    public static final String PREF_KEY_FIRST_START = "Introduction.PREF_KEY_FIRST_START";
+    public static final int REQUEST_CODE_INTRO = 1;
+    static boolean  firstStart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
+
+
         ctx=getApplicationContext();
+
+
+        firstStart= PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREF_KEY_FIRST_START, true);
+        //Toast.makeText(ctx, ""+firstStart, Toast.LENGTH_SHORT).show();
+        if (firstStart) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivityForResult(intent,REQUEST_CODE_INTRO);
+        }
 
         notificationManager  = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         myAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -79,9 +98,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
-
         //Set UserName  From FireBaseAuth.getUserEmail
-        sp=getSharedPreferences("UserDetails",MODE_PRIVATE);
 
         //if Username is not present in SharedPreferences
         if(!sp.contains("UserName")){
@@ -91,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             //Trim mail to remove @gmail.com for more better Username
             String mail=user.getEmail();
             mail=mail.substring(0,mail.length()-10);
+            mail.replaceAll(".",",");
             //Save the Final String in SharedPreferences for future Reference
             SharedPreferences.Editor se=sp.edit();
             se.putString("UserName",mail);
@@ -99,13 +117,35 @@ public class MainActivity extends AppCompatActivity {
         //Get UserName for SharedPreferences
         name=sp.getString("UserName","");
 
-        //startAlarm();
+
+        startAlarm();
     }
     @Override
     public void onResume() {
         super.onResume();
-        startStep1();
+        if (!firstStart) {
+            startStep1();
+        }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_INTRO) {
+            if (resultCode == RESULT_OK) {
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putBoolean(PREF_KEY_FIRST_START, false)
+                        .apply();
+            } else {
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putBoolean(PREF_KEY_FIRST_START, true)
+                        .apply();
+                //User cancelled the intro so we'll finish this activity too.
+                finish();
+            }
+        }
+    }
+
 
     private void startAlarm() {
         Calendar cal=Calendar.getInstance();
@@ -113,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),1, intent, 0);
         //Log.i(TAG, "startAlarmService: ");
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),60*1000,pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),15*60*1000,pendingIntent);
 
     }
     public void startStep1() {
@@ -170,9 +210,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void promptInternetConnect() {
-        /**
-         * Show A Dialog with button to refresh the internet state.
-         */
+        /*Show A Dialog with button to refresh the internet state.*/
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.title_alert_no_intenet);
         builder.setMessage(R.string.msg_alert_no_internet);
@@ -283,9 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAction(getString(actionStringId), listener).show();
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
+    /*Callback received when a permissions request has been completed.*/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -302,11 +338,9 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 // Permission denied.
-
                 // Notify the img_user via a SnackBar that they have rejected a core permission for the
                 // app, which makes the Activity useless. In a real app, core permissions would
                 // typically be best requested during a welcome-screen flow.
-
                 // Additionally, it is important to remember that a permission might have been
                 // rejected without asking the img_user for permission (device policy or "Never ask
                 // again" prompts). Therefore, a img_user interface affordance is typically implemented
